@@ -1,6 +1,7 @@
 package com.dietician.mobile.di
 
 import android.content.Context
+import com.dietician.mobile.ui.addPlan.di.AddPlanComponent
 import com.dietician.mobile.ui.home.di.HomeComponent
 import dagger.BindsInstance
 import dagger.Component
@@ -22,11 +23,13 @@ interface AppComponent {
     }
 
     fun homeComponent(): HomeComponent.Factory
+    fun addPlanComponent(): AddPlanComponent.Factory
 }
 
 @Module(
     subcomponents = [
-        HomeComponent::class
+        HomeComponent::class,
+        AddPlanComponent::class
     ]
 )
 object SubComponentsModule
