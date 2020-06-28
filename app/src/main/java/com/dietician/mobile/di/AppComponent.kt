@@ -3,6 +3,9 @@ package com.dietician.mobile.di
 import android.content.Context
 import com.dietician.mobile.ui.addPlan.di.AddPlanComponent
 import com.dietician.mobile.ui.home.di.HomeComponent
+import com.dietician.mobile.ui.plan.di.PlanComponent
+import com.dietician.mobile.ui.profile.di.ProfileComponent
+import com.dietician.mobile.ui.progress.di.ProgressComponent
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -24,12 +27,20 @@ interface AppComponent {
 
     fun homeComponent(): HomeComponent.Factory
     fun addPlanComponent(): AddPlanComponent.Factory
+    fun planComponent(): PlanComponent.Factory
+    fun profileComponent(): ProfileComponent.Factory
+    fun progressComponent(): ProgressComponent.Factory
+
 }
 
 @Module(
     subcomponents = [
         HomeComponent::class,
-        AddPlanComponent::class
+        AddPlanComponent::class,
+        PlanComponent::class,
+        ProfileComponent::class,
+        ProgressComponent::class
+
     ]
 )
 object SubComponentsModule
