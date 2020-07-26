@@ -27,7 +27,7 @@
             <!-- Media -->
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="194dp"
+                android:layout_height="@dimen/diet_plan_height"
                 android:contentDescription="@string/content_description_media"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/food1" />

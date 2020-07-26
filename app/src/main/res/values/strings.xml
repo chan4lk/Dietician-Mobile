@@ -46,4 +46,7 @@
     <string name="action_1">Customize</string>
     <string name="action_2">High Five</string>
     <string name="plan_name">Plan Name</string>
+    <string name="diet_product_content">Plan A</string>
+    <string name="diet_product_title">Plan A</string>
+    <string name="diet_product_description">2 months plan  goaled for 70KG</string>
 </resources>

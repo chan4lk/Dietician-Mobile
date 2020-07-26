@@ -1,2 +1,7 @@
+include ':data'
+include ':presentation'
+include ':local'
+include ':remote'
 rootProject.name='Dietician Mobile'
 include ':app'
+include ':domain'
