@@ -49,4 +49,6 @@
     <string name="diet_product_content">Plan A</string>
     <string name="diet_product_title">Plan A</string>
     <string name="diet_product_description">2 months plan  goaled for 70KG</string>
+
+    <string name="header_text">Break First</string>
 </resources>

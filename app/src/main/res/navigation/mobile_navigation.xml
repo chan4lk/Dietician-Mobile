@@ -41,11 +41,17 @@
         android:label="@string/menu_plan"
         tools:layout="@layout/fragment_plan"/>
 
+<!--    <fragment-->
+<!--        android:id="@+id/nav_today_diet"-->
+<!--        android:name="com.dietician.mobile.ui.slideshow.SlideshowFragment"-->
+<!--        android:label="@string/menu_slideshow"-->
+<!--        tools:layout="@layout/fragment_slideshow" />-->
+
     <fragment
         android:id="@+id/nav_today_diet"
-        android:name="com.dietician.mobile.ui.slideshow.SlideshowFragment"
+        android:name="com.dietician.mobile.ui.food.FoodFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_diet" />
 
     <fragment
         android:id="@+id/nav_progress"
@@ -53,4 +59,10 @@
         android:label="@string/menu_progress"
         tools:layout="@layout/fragment_progress"
         />
+
+    <fragment
+        android:id="@+id/add_plan"
+        android:name="com.dietician.mobile.ui.addPlan.AddPlanFragment"
+        android:label="@string/add_plan"
+        tools:layout="@layout/fragment_add_plan"/>
 </navigation>
