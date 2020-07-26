@@ -1,4 +1,5 @@
-package com.dietician.mobile.ui.addPlan
+package com.dietician.mobile.ui.login
+
 
 import android.content.Context
 import android.os.Bundle
@@ -12,18 +13,18 @@ import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
 import javax.inject.Inject
 
-class AddPlanFragment : Fragment() {
+class LoginFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val addPlanViewModel by viewModels<AddPlanViewModel> { viewModelFactory }
+    private val addPlanViewModel by viewModels<LoginViewModel> { viewModelFactory }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity()
             .application as DieticianApplication)
             .appComponent
-            .addPlanComponent()
+            .loginComponent()
             .create()
             .inject(this)
     }
@@ -34,7 +35,7 @@ class AddPlanFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val root = inflater.inflate(R.layout.fragment_add_plan, container, false)
+        val root = inflater.inflate(R.layout.fragment_login, container, false)
 
 
         return root
