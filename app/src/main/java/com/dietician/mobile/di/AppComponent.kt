@@ -15,7 +15,8 @@ import javax.inject.Singleton
 @Component(
     modules = [
         ViewModelBuilderModule::class,
-        SubComponentsModule::class
+        SubComponentsModule::class,
+        RemoteModule::class
     ]
 )
 interface AppComponent {
