@@ -12,7 +12,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
             //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-             //   .setAction("Action", null).show()
+            //   .setAction("Action", null).show()
 
         }
 
@@ -39,7 +38,12 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_profile, R.id.nav_plan, R.id.nav_today_diet, R.id.nav_progress
+                R.id.nav_login,
+                R.id.nav_home,
+                R.id.nav_profile,
+                R.id.nav_plan,
+                R.id.nav_today_diet,
+                R.id.nav_progress
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -3,6 +3,7 @@ package com.dietician.mobile.di
 import android.content.Context
 import com.dietician.mobile.ui.addPlan.di.AddPlanComponent
 import com.dietician.mobile.ui.home.di.HomeComponent
+import com.dietician.mobile.ui.login.di.LoginComponent
 import com.dietician.mobile.ui.plan.di.PlanComponent
 import com.dietician.mobile.ui.profile.di.ProfileComponent
 import com.dietician.mobile.ui.progress.di.ProgressComponent
@@ -31,6 +32,7 @@ interface AppComponent {
     fun planComponent(): PlanComponent.Factory
     fun profileComponent(): ProfileComponent.Factory
     fun progressComponent(): ProgressComponent.Factory
+    fun loginComponent(): LoginComponent.Factory
 
 }
 
@@ -40,8 +42,8 @@ interface AppComponent {
         AddPlanComponent::class,
         PlanComponent::class,
         ProfileComponent::class,
-        ProgressComponent::class
-
+        ProgressComponent::class,
+        LoginComponent::class
     ]
 )
 object SubComponentsModule
