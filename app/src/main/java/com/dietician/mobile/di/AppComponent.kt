@@ -45,9 +45,7 @@ interface AppComponent {
         PlanComponent::class,
         ProfileComponent::class,
         ProgressComponent::class,
-        FoodComponent::class
-
-        ProgressComponent::class,
+        FoodComponent::class,
         LoginComponent::class
     ]
 )
