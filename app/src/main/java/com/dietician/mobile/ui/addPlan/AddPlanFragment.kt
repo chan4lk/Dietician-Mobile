@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
-import com.google.android.material.textfield.TextInputEditText
 import javax.inject.Inject
 
 class AddPlanFragment : Fragment() {
