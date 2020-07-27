@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
         val loginButton: MaterialButton = root.findViewById(R.id.login_btn)
 
         loginButton.setOnClickListener {
-            viewModel.login(userName.text, password.text)
+            viewModel.login(userName.text.toString(), password.text.toString())
         }
 
         viewModel.loggedIn.observe(viewLifecycleOwner, Observer {

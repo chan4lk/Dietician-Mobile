@@ -3,6 +3,8 @@ package com.dietician.mobile.di
 import com.dietician.data.repository.RemoteDataSource
 import com.dietician.mobile.BuildConfig
 import com.dietician.remote.api.AuthApi
+import com.dietician.remote.api.PlanApi
+import com.dietician.remote.mapper.ResponseMapper
 import com.dietician.remote.source.RemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -20,11 +22,21 @@ class RemoteModule {
         fun bindsRemoteSource(
             remoteDataSourceImpl: RemoteDataSourceImpl
         ): RemoteDataSource
+
+
     }
+
+    @Provides
+    fun provideMapper(): ResponseMapper =
+        ResponseMapper()
 
     @Provides
     fun provideAuthApi(retrofit: Retrofit): AuthApi =
         retrofit.create(AuthApi::class.java)
+
+    @Provides
+    fun providePlanApi(retrofit: Retrofit): PlanApi =
+        retrofit.create(PlanApi::class.java)
 
     @Provides
     fun provideRetrofit(): Retrofit =
