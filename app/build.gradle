@@ -24,6 +24,11 @@ android {
         }
     }
 
+    // Enables data binding.
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes.each {
         it.buildConfigField 'String', 'USER_NAME', username
         it.buildConfigField 'String', 'PASSWORD', password

@@ -55,4 +55,6 @@
     <string name="password_helper_text">Enter passwrod</string>
     <string name="login_btn_label">Login</string>
     <string name="menu_login">Login</string>
+
+    <string name="header_text">Break First</string>
 </resources>
