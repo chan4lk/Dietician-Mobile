@@ -24,6 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLines="1"
+            android:text="admin"
             android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -47,12 +48,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLines="1"
+            android:inputType="textPassword"
+            android:text="admin"
             android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button"
+        android:id="@+id/login_btn"
         style="?attr/actionButtonStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
