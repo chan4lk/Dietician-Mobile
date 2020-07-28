@@ -1,6 +1,7 @@
 package com.dietician.mobile.ui.food
 
 import android.annotation.SuppressLint
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,14 +9,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dietician.mobile.R
+import com.dietician.mobile.databinding.HeaderBinding
 import com.dietician.mobile.databinding.ListItemFoodBinding
 import com.dietician.presentation.model.Food
+import com.dietician.presentation.model.Header
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-private val ITEM_VIEW_TYPE_HEADER = 0
+internal val ITEM_VIEW_TYPE_HEADER = 0
 private val ITEM_VIEW_TYPE_ITEM = 1
 
 class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, RecyclerView.ViewHolder>(FoodDiffCallback()){
@@ -24,9 +27,26 @@ class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, Recyc
 
     fun addHeaderAndSubmitList(list: List<Food>?) {
         adapterScope.launch {
+            val bfFood = mutableListOf<Food>()
+            val lFood = mutableListOf<Food>()
+            val dFood = mutableListOf<Food>()
+            val h0 = Header(id=1, title = "There is no diet menu")
+            val h1 = Header(id=1, title = "Break First")
+            val h2 = Header(id=2, title = "Lunch")
+            val h3 = Header(id=3, title = "Dinner")
             val items = when (list) {
-                null -> listOf(DataItem.Header)
-                else -> listOf(DataItem.Header) + list.map { DataItem.FoodItem(it) }
+                null -> listOf(DataItem.HeaderItem(h0))
+                else ->
+                {
+                    for(fd in list) {
+                        when(fd.headerId){
+                            1-> bfFood.add(fd)
+                            2-> lFood.add(fd)
+                            else-> dFood.add(fd)
+                        }
+                    }
+                    listOf(DataItem.HeaderItem(h1)) + bfFood.map { DataItem.FoodItem(it) } + listOf(DataItem.HeaderItem(h2)) + lFood.map { DataItem.FoodItem(it) }+ listOf(DataItem.HeaderItem(h3)) + dFood.map { DataItem.FoodItem(it) }
+                }
             }
             withContext(Dispatchers.Main) {
                 submitList(items)
@@ -39,9 +59,11 @@ class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, Recyc
             is ViewHolder ->{
                 val foodItem = getItem(position) as DataItem.FoodItem
                 holder.bind(foodItem.food, clickListener)
-
             }
-
+            is TextViewHolder ->{
+                val headerItem = getItem(position) as DataItem.HeaderItem
+                holder.bindHeader(headerItem.header)
+            }
         }
     }
 
@@ -55,21 +77,24 @@ class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, Recyc
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is DataItem.Header -> ITEM_VIEW_TYPE_HEADER
+            is DataItem.HeaderItem -> ITEM_VIEW_TYPE_HEADER
             is DataItem.FoodItem -> ITEM_VIEW_TYPE_ITEM
         }
     }
 
-    class TextViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class TextViewHolder(val binding: HeaderBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bindHeader(item: Header){
+            binding.title = item
+            binding.executePendingBindings()
+        }
         companion object {
             fun from(parent: ViewGroup): TextViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val view = layoutInflater.inflate(R.layout.header, parent, false)
-                return TextViewHolder(view)
+                val binding = HeaderBinding.inflate(layoutInflater, parent, false)
+                return TextViewHolder(binding)
             }
         }
     }
-
 
     class ViewHolder private constructor(val binding: ListItemFoodBinding): RecyclerView.ViewHolder(binding.root){
 
@@ -87,7 +112,6 @@ class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, Recyc
             }
         }
     }
-
 }
 
 class FoodDiffCallback : DiffUtil.ItemCallback<DataItem>(){
@@ -113,8 +137,9 @@ sealed class DataItem {
         override val id = food.id
     }
 
-    object Header: DataItem() {
-        override val id = Long.MIN_VALUE
+    data class HeaderItem(var header: Header): DataItem() {
+        var title = header.title
+        override val id = header.id
     }
 
     abstract val id: Long

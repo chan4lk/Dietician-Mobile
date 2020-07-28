@@ -23,11 +23,18 @@ class FoodFragment : Fragment() {
     private val foodViewModel by viewModels<FoodViewModel> { viewModelFactory }
 
     private val foodItem: List<Food> = listOf(
-        Food(1, "Coffee"),
-        Food(2, "Rice"),
-        Food(1, "Milk"),
-        Food(1, "Cheese"),
-        Food(1, "Cake")
+        Food(4, "Coffee", 1),
+        Food(9, "Coffee", 1),
+        Food(10, "Coffee", 1),
+        Food(11, "Coffee", 1),
+        Food(5, "Rice", 2),
+        Food(12, "Rice", 2),
+        Food(13, "Rice", 2),
+        Food(14, "Rice", 2),
+        Food(15, "Rice", 2),
+        Food(6, "Milk",3),
+        Food(7, "Cheese", 1),
+        Food(8, "Cake", 3)
     )
 
     override fun onAttach(context: Context) {
@@ -49,14 +56,13 @@ class FoodFragment : Fragment() {
 
         adapter.addHeaderAndSubmitList(foodItem)
 
-
-
         binding.foodListRecyclerView.adapter = adapter
 
         val manager =GridLayoutManager(activity, 3)
         manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int) =  when (position) {
-                0 -> 3
+
+            override fun getSpanSize(position: Int) =  when (adapter.getItemViewType(position)) {
+                ITEM_VIEW_TYPE_HEADER -> 3
                 else -> 1
             }
         }

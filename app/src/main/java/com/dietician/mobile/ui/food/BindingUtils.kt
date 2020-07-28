@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.dietician.mobile.R
 import com.dietician.presentation.model.Food
+import com.dietician.presentation.model.Header
 
 @BindingAdapter("foodNameString")
 fun TextView.setFoodNameString(item: Food?) {
@@ -22,5 +23,12 @@ fun ImageView.setSleepImage(item: Food?) {
             "F3" -> R.drawable.ic_fastfood_24
             else -> R.drawable.ic_fastfood_24
         })
+    }
+}
+
+@BindingAdapter("headerTitle")
+fun TextView.setTitleString(item: Header?) {
+    item?.let {
+        text = item.title
     }
 }
