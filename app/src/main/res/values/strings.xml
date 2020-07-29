@@ -31,7 +31,7 @@
     <string name="target_duration_hint">target duration</string>
     <string name="target_weight">Target Weight</string>
     <string name="target_weight_hint">target weight</string>
-    <string name="plan_name_hint">plan name</string>
+    <string name="plan_name_hint">Plan Name</string>
 
     <string name="progress_screen">This is health progress screen</string>
 

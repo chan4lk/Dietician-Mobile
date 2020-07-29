@@ -128,7 +128,6 @@ class FoodDiffCallback : DiffUtil.ItemCallback<DataItem>(){
 
 class FoodListener(val clickListener: (dietId: Long)-> Unit){
     fun onClick (food: Food) = clickListener(food.id)
-
 }
 
 sealed class DataItem {
