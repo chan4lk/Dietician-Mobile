@@ -57,4 +57,5 @@
     <string name="menu_login">Login</string>
 
     <string name="header_text">Break First</string>
+    <string name="no_plan_message">No plans yet, Please add your plan</string>
 </resources>

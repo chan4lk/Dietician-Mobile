@@ -55,7 +55,6 @@ class FoodFragment : Fragment() {
         })
 
         adapter.addHeaderAndSubmitList(foodItem)
-
         binding.foodListRecyclerView.adapter = adapter
 
         val manager =GridLayoutManager(activity, 3)
@@ -67,7 +66,6 @@ class FoodFragment : Fragment() {
             }
         }
         binding.foodListRecyclerView.layoutManager = manager
-
         return binding.root
     }
 
