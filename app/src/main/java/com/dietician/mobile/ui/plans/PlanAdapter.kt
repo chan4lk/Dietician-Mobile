@@ -35,21 +35,21 @@ constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: PlanViewHolder, position: Int) {
-        val planItem = planItemList[position]
-        holder.bind(planItem)
+        if(itemCount >0)
+        {
+            val planItem = planItemList[position]
+            holder.bind(planItem)
+        }
     }
 
     interface ClickListener {
         fun onPlanItemClick(planItem: String)
     }
 
-
     inner class PlanViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         lateinit var selectedItem: String
-
         private var itemName: TextView? = null
-
 
         init {
             itemName = itemView.findViewById(R.id.item_name)

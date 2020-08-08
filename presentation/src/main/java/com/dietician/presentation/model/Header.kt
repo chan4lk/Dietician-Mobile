@@ -1,8 +1,7 @@
 package com.dietician.presentation.model
 
-data class Food (
+data class Header (
     val id: Long = 0L,
-    var name: String,
-    var headerId: Int
+    var title: String
 
 )
