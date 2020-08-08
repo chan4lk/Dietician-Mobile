@@ -1,4 +1,4 @@
-package com.dietician.mobile.ui.home
+package com.dietician.presentation.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

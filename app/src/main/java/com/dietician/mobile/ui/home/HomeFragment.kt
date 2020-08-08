@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
+import com.dietician.presentation.viewmodels.HomeViewModel
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {

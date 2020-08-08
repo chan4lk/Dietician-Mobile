@@ -23,7 +23,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override fun getPlans(token: String): Observable<List<PlanData>> {
-        return planApi.getPlans(token).map { response ->
+        return planApi.getPlans().map { response ->
             response.map { plan -> mapper.mapToPlan(plan) }
         }
     }

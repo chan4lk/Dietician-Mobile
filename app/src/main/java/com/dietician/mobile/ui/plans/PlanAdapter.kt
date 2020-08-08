@@ -6,19 +6,23 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dietician.mobile.R
+import com.dietician.presentation.model.Plan
+import java.util.*
 import javax.inject.Inject
 
 class PlanAdapter @Inject
-constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>(){
+constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>() {
 
-    private var planItemList: List<String> = emptyList()
-    private  var clickListener: ClickListener? = null
+    private var planItemList: MutableList<Plan> = ArrayList()
+    private var clickListener: ClickListener? = null
 
-    fun setPlanItem(planItems:List<String>){
-        planItemList = planItems
+    fun setPlanItem(planItems: List<Plan>) {
+        planItemList.clear()
+        planItemList.addAll(planItems)
+        notifyDataSetChanged()
     }
 
-    fun setClickListener(clickListener: ClickListener){
+    fun setClickListener(clickListener: ClickListener) {
         this.clickListener = clickListener
     }
 
@@ -43,12 +47,12 @@ constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>(){
     }
 
     interface ClickListener {
-        fun onPlanItemClick(planItem: String)
+        fun onPlanItemClick(planItem: Plan)
     }
 
     inner class PlanViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
-        lateinit var selectedItem: String
+        private lateinit var selectedItem: Plan
         private var itemName: TextView? = null
 
         init {
@@ -58,9 +62,9 @@ constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>(){
             }
         }
 
-        fun bind(planItem: String) {
+        fun bind(planItem: Plan) {
             selectedItem = planItem
-            itemName?.text = planItem
+            itemName?.text = planItem.name
         }
 
     }

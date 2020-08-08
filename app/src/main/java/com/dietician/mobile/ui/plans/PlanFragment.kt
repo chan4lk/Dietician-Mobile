@@ -6,18 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
-import com.dietician.mobile.ui.food.FoodFragment
 import com.dietician.mobile.ui.plans.PlanAdapter
+import com.dietician.presentation.model.Plan
+import com.dietician.presentation.model.Status
+import com.dietician.presentation.viewmodels.PlanViewModel
 import kotlinx.android.synthetic.main.fragment_plan.*
 import javax.inject.Inject
 
@@ -29,7 +28,7 @@ class PlanFragment @Inject
     @Inject
     lateinit var planAdapter: PlanAdapter
 
-    private val planFragment by viewModels<PlanViewModel>{viewModelFactory}
+    private val viewModel by viewModels<PlanViewModel> { viewModelFactory }
 
     lateinit var label: TextView
 
@@ -63,10 +62,28 @@ class PlanFragment @Inject
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        planAdapter.setPlanItem(plans)
+
+        viewModel.plansListSource.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.LOADING -> {
+
+                }
+                Status.ERROR -> {
+
+                }
+                Status.SUCCESS -> {
+                    it.data?.let { plans ->
+                        planAdapter.setPlanItem(plans)
+                    }
+
+                }
+            }
+        })
+
+
         label.visibility = View.GONE
 
-        if(plans.count()==0)
+        if (plans.count() == 0)
             label.visibility = View.VISIBLE
 
         plan_list_recycler_view?.apply {
@@ -75,7 +92,7 @@ class PlanFragment @Inject
         }
     }
 
-    override fun onPlanItemClick(planItem: String) {
+    override fun onPlanItemClick(planItem: Plan) {
         //load diet menu screen of the clicked plan item
 //        var foodFrag =  FoodFragment()
 //        activity?.supportFragmentManager?.beginTransaction()
