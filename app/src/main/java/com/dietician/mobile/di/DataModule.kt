@@ -6,11 +6,14 @@ import com.dietician.data.mapper.TokenDomainDataMapper
 import com.dietician.data.model.PlanData
 import com.dietician.data.model.TokenData
 import com.dietician.data.repository.DietRepositoryImpl
+import com.dietician.data.repository.TokenRepositoryImpl
 import com.dietician.domain.entities.PlanEntity
 import com.dietician.domain.entities.TokenEntity
 import com.dietician.domain.repository.DietRepository
+import com.dietician.domain.repository.TokenRepository
 import dagger.Binds
 import dagger.Module
+import javax.inject.Singleton
 
 @Module
 abstract class DataModule {
@@ -29,4 +32,10 @@ abstract class DataModule {
     abstract fun bindsPlanMapper(
         mapper: PlanDomainDataMapper
     ): Mapper<PlanEntity, PlanData>
+
+    @Binds
+    @Singleton
+    abstract fun bindTokenRepository(
+        repository: TokenRepositoryImpl
+    ): TokenRepository
 }

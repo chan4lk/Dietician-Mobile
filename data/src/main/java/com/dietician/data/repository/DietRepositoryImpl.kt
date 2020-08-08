@@ -14,6 +14,7 @@ class DietRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) : DietRepository {
+
     override fun login(userName: String, password: String): Observable<TokenEntity> {
         val tokenObservable = localDataSource.login(userName, password)
             .map { tokenDomainDataMapper.from(it) }

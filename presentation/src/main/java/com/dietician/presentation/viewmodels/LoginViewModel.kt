@@ -4,6 +4,7 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dietician.domain.repository.TokenRepository
 import com.dietician.domain.usecases.LoginTask
 import com.dietician.presentation.mapper.TokenEntityMapper
 import com.dietician.presentation.model.Resource
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val loginTask: LoginTask,
-    private val tokenMapper: TokenEntityMapper
+    private val tokenMapper: TokenEntityMapper,
+    private val tokenRepository: TokenRepository
 ) : ViewModel() {
     private val _loggedIn = MutableLiveData<Boolean>().apply {
         value = false
@@ -27,7 +29,8 @@ class LoginViewModel @Inject constructor(
         disposables.add(
             loginTask.buildUseCase(params)
                 .map {
-                    _loggedIn.postValue(TextUtils.isEmpty(it.token))
+                    tokenRepository.setToken(it.token)
+                    _loggedIn.postValue(!TextUtils.isEmpty(it.token))
                     tokenMapper.to(it)
                 }
                 .map { Resource.success(it) }

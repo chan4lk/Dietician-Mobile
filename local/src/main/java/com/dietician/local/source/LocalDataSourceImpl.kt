@@ -23,6 +23,13 @@ class LocalDataSourceImpl @Inject constructor(
             }
     }
 
+    override fun getToken(): Observable<TokenData> {
+        return tokenDAO.getActiveToken()
+            .map {
+                tokenMapper.from(it)
+            }
+    }
+
     override fun getPlans(userName: String): Observable<List<PlanData>> {
         return planDAO.getUserPlans(userName)
             .map { plans ->

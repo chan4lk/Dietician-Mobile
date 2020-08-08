@@ -9,4 +9,5 @@ interface DietRepository {
     fun login(userName: String, password: String): Observable<TokenEntity>
 
     fun getPlans(token: String): Observable<List<PlanEntity>>
+
 }
