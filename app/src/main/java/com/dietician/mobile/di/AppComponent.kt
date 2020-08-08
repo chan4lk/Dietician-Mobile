@@ -1,6 +1,7 @@
 package com.dietician.mobile.di
 
 import android.content.Context
+import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.ui.addPlan.di.AddPlanComponent
 import com.dietician.mobile.ui.food.di.FoodComponent
 import com.dietician.mobile.ui.home.di.HomeComponent
@@ -11,6 +12,7 @@ import com.dietician.mobile.ui.progress.di.ProgressComponent
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
+import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
@@ -18,10 +20,16 @@ import javax.inject.Singleton
     modules = [
         ViewModelBuilderModule::class,
         SubComponentsModule::class,
-        RemoteModule::class
+        RemoteModule::class,
+        LocalModule::class,
+        DomainModule::class,
+        PresentationModule::class,
+        DataModule::class
     ]
 )
-interface AppComponent {
+interface AppComponent : AndroidInjector<DieticianApplication> {
+
+    override fun inject(instance: DieticianApplication)
 
     @Component.Factory
     interface Factory {

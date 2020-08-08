@@ -1,7 +1,7 @@
 package com.dietician.remote.source
 
-import com.dietician.data.model.Plan
-import com.dietician.data.model.Token
+import com.dietician.data.model.PlanData
+import com.dietician.data.model.TokenData
 import com.dietician.data.repository.RemoteDataSource
 import com.dietician.remote.api.AuthApi
 import com.dietician.remote.api.PlanApi
@@ -15,14 +15,14 @@ class RemoteDataSourceImpl @Inject constructor(
     private val planApi: PlanApi,
     private val mapper: ResponseMapper
 ) : RemoteDataSource {
-    override fun login(userName: String, password: String): Observable<Token> {
+    override fun login(userName: String, password: String): Observable<TokenData> {
         val credential = Credential(userName, password)
         return authApi.login(credential).map { response ->
-            Token(response.token)
+            TokenData(response.token)
         }
     }
 
-    override fun getPlans(token: String): Observable<List<Plan>> {
+    override fun getPlans(token: String): Observable<List<PlanData>> {
         return planApi.getPlans(token).map { response ->
             response.map { plan -> mapper.mapToPlan(plan) }
         }

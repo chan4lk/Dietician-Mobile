@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
+import com.dietician.presentation.viewmodels.LoginViewModel
 import com.google.android.material.button.MaterialButton
 import javax.inject.Inject
 

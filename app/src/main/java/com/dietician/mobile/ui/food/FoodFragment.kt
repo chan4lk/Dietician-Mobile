@@ -42,8 +42,9 @@ class FoodFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        val binding: FragmentDietBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_diet, container, false)
-        val adapter = FoodAdapter(FoodListener { id ->
+        val binding: FragmentDietBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_diet, container, false)
+        val adapter = FoodAdapter(FoodListener {
             //Toast.makeText(context, "${nightId}", Toast.LENGTH_LONG).show()
         })
 
@@ -53,7 +54,7 @@ class FoodFragment : Fragment() {
 
         binding.foodListRecyclerView.adapter = adapter
 
-        val manager =GridLayoutManager(activity, 3)
+        val manager = GridLayoutManager(activity, 3)
         manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int) =  when (position) {
                 0 -> 3

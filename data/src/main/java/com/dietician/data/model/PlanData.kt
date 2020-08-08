@@ -1,6 +1,6 @@
-package com.dietician.domain.entities
+package com.dietician.data.model
 
-open class PlanEntity(
+data class PlanData(
     val id: Number,
     val target: Number,
     val name: String,
