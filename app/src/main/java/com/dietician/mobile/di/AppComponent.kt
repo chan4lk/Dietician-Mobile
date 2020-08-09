@@ -9,6 +9,7 @@ import com.dietician.mobile.ui.login.di.LoginComponent
 import com.dietician.mobile.ui.plan.di.PlanComponent
 import com.dietician.mobile.ui.profile.di.ProfileComponent
 import com.dietician.mobile.ui.progress.di.ProgressComponent
+import com.dietician.mobile.ui.sign.di.SignUpComponent
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -43,6 +44,7 @@ interface AppComponent : AndroidInjector<DieticianApplication> {
     fun progressComponent(): ProgressComponent.Factory
     fun loginComponent(): LoginComponent.Factory
     fun foodComponent(): FoodComponent.Factory
+    fun signUpComponent(): SignUpComponent.Factory
 
 }
 
@@ -54,7 +56,8 @@ interface AppComponent : AndroidInjector<DieticianApplication> {
         ProfileComponent::class,
         ProgressComponent::class,
         FoodComponent::class,
-        LoginComponent::class
+        LoginComponent::class,
+        SignUpComponent::class
     ]
 )
 object SubComponentsModule

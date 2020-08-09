@@ -3,13 +3,16 @@ package com.dietician.mobile.di
 import android.content.Context
 import com.dietician.data.model.PlanData
 import com.dietician.data.model.TokenData
+import com.dietician.data.model.UserData
 import com.dietician.data.repository.LocalDataSource
 import com.dietician.local.database.DietDB
 import com.dietician.local.mapper.Mapper
 import com.dietician.local.mapper.PlanDataLocalMapper
 import com.dietician.local.mapper.TokenDataLocalMapper
+import com.dietician.local.mapper.UserDataLocalMapper
 import com.dietician.local.model.PlanLocal
 import com.dietician.local.model.TokenLocal
+import com.dietician.local.model.UserLocal
 import com.dietician.local.source.LocalDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -34,6 +37,11 @@ class LocalModule {
         fun bindPlanMapper(
             planDataLocalMapper: PlanDataLocalMapper
         ): Mapper<PlanData, PlanLocal>
+
+        @Binds
+        fun bindUserMapper(
+            userDataLocalMapper: UserDataLocalMapper
+        ): Mapper<UserData, UserLocal>
     }
 
     @Provides
@@ -53,4 +61,10 @@ class LocalModule {
     fun providesPlanDAO(
         dietDB: DietDB
     ) = dietDB.getPlanDao()
+
+    @Provides
+    @Singleton
+    fun providesUserDAO(
+        dietDB: DietDB
+    ) = dietDB.getUserDao()
 }

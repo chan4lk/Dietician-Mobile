@@ -9,9 +9,10 @@ import androidx.room.TypeConverters
 import com.dietician.local.mapper.Converters
 import com.dietician.local.model.PlanLocal
 import com.dietician.local.model.TokenLocal
+import com.dietician.local.model.UserLocal
 
 @Database(
-    entities = [TokenLocal::class, PlanLocal::class],
+    entities = [TokenLocal::class, PlanLocal::class, UserLocal::class],
     version = 1,
     exportSchema = false
 )
@@ -19,7 +20,7 @@ import com.dietician.local.model.TokenLocal
 abstract class DietDB : RoomDatabase() {
     companion object {
         private val LOCK = Any()
-        private const val DATABASE_NAME = "bank_buddy.db"
+        private const val DATABASE_NAME = "diet.db"
 
         @Volatile
         private var INSTANCE: DietDB? = null
@@ -44,4 +45,6 @@ abstract class DietDB : RoomDatabase() {
     abstract fun getTokenDao(): TokenDAO
 
     abstract fun getPlanDao(): PlanDAO
+
+    abstract fun getUserDao(): UserDAO
 }

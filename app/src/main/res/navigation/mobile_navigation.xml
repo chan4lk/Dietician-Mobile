@@ -6,6 +6,12 @@
     app:startDestination="@+id/nav_login">
 
     <fragment
+        android:id="@+id/nav_signup"
+        android:name="com.dietician.mobile.ui.signup.SignUpFragment"
+        android:label="@string/menu_sign_up"
+        tools:layout="@layout/fragment_sign_up" />
+
+    <fragment
         android:id="@+id/nav_login"
         android:name="com.dietician.mobile.ui.login.LoginFragment"
         android:label="@string/menu_login"
@@ -21,19 +27,6 @@
         <!--            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"-->
         <!--            app:destination="@id/nav_home_second" />-->
     </fragment>
-    <!--    <fragment-->
-    <!--        android:id="@+id/nav_home_second"-->
-    <!--        android:name="com.dietician.mobile.ui.home.HomeSecondFragment"-->
-    <!--        android:label="@string/home_second"-->
-    <!--        tools:layout="@layout/fragment_home_second">-->
-    <!--        <action-->
-    <!--            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"-->
-    <!--            app:destination="@id/nav_home" />-->
-
-    <!--        <argument-->
-    <!--            android:name="myArg"-->
-    <!--            app:argType="string" />-->
-    <!--    </fragment>-->
 
     <fragment
         android:id="@+id/nav_profile"
@@ -47,11 +40,6 @@
         android:label="@string/menu_plan"
         tools:layout="@layout/fragment_plan" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_today_diet"-->
-<!--        android:name="com.dietician.mobile.ui.slideshow.SlideshowFragment"-->
-<!--        android:label="@string/menu_slideshow"-->
-<!--        tools:layout="@layout/fragment_slideshow" />-->
 
     <fragment
         android:id="@+id/nav_today_diet"
@@ -63,12 +51,11 @@
         android:id="@+id/nav_progress"
         android:name="com.dietician.mobile.ui.progress.ProgressFragment"
         android:label="@string/menu_progress"
-        tools:layout="@layout/fragment_progress"
-        />
+        tools:layout="@layout/fragment_progress" />
 
     <fragment
         android:id="@+id/add_plan"
         android:name="com.dietician.mobile.ui.addPlan.AddPlanFragment"
         android:label="@string/add_plan"
-        tools:layout="@layout/fragment_add_plan"/>
+        tools:layout="@layout/fragment_add_plan" />
 </navigation>

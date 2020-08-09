@@ -44,9 +44,14 @@ class LoginFragment : Fragment() {
         val userName: TextView = root.findViewById(R.id.username_text)
         val password: TextView = root.findViewById(R.id.password_text)
         val loginButton: MaterialButton = root.findViewById(R.id.login_btn)
+        val signUpButton: MaterialButton = root.findViewById(R.id.nav_signup_btn)
 
         loginButton.setOnClickListener {
             viewModel.login(userName.text.toString(), password.text.toString())
+        }
+
+        signUpButton.setOnClickListener {
+            findNavController().navigate(R.id.nav_signup)
         }
 
         viewModel.loggedIn.observe(viewLifecycleOwner, Observer {

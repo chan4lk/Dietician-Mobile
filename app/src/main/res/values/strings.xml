@@ -52,10 +52,22 @@
     <string name="username_label">Username</string>
     <string name="username_helper_text">Enter Username</string>
     <string name="username_placeholder_text">admin</string>
-    <string name="password_helper_text">Enter passwrod</string>
+    <string name="password_helper_text">Enter password</string>
     <string name="login_btn_label">Login</string>
     <string name="menu_login">Login</string>
 
     <string name="header_text">Break First</string>
     <string name="no_plan_message">No plans yet, Please add your plan</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_up">Register</string>
+    <string name="action_sign_up_short">Signup</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="menu_sign_up">SignUp</string>
+    <string name="prompt_firstname">FirstName</string>
+    <string name="prompt_lastname">Last Name</string>
 </resources>

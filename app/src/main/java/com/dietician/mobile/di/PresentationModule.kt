@@ -21,4 +21,5 @@ abstract class PresentationModule {
     abstract fun bindPlanMapper(
         planEntityMapper: PlanEntityMapper
     ): Mapper<PlanEntity, Plan>
+
 }
