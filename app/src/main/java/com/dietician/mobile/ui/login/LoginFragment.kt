@@ -3,6 +3,7 @@ package com.dietician.mobile.ui.login
 
 import android.content.Context
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
+import com.dietician.presentation.model.Status
 import com.dietician.presentation.viewmodels.LoginViewModel
 import com.google.android.material.button.MaterialButton
 import javax.inject.Inject
@@ -54,9 +56,21 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.nav_signup)
         }
 
-        viewModel.loggedIn.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                true -> findNavController().navigate(R.id.nav_home)
+        viewModel.source.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    if (!TextUtils.isEmpty(it.data?.token)) {
+                        findNavController().navigate(R.id.nav_home)
+                    }
+                }
+                Status.ERROR -> {
+
+                    loginButton.isEnabled = true
+                }
+
+                Status.LOADING -> {
+                    loginButton.isEnabled = false
+                }
             }
 
         })

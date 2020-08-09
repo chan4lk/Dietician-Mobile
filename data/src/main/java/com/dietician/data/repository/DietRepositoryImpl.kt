@@ -29,9 +29,9 @@ class DietRepositoryImpl @Inject constructor(
 
         return remoteDataSource.login(userName, password)
             .map {
-                localDataSource.saveToken(userName, it)
+                localDataSource.saveToken(userName, it).subscribe()
                 tokenDomainDataMapper.from(it)
-            }.onErrorResumeNext(Observable.empty())
+            }
             .concatWith(tokenObservable)
     }
 
@@ -83,7 +83,7 @@ class DietRepositoryImpl @Inject constructor(
                         age = profile.age,
                         userId = userId
                     )
-                    localDataSource.saveProfile(userName, profileWithId)
+                    localDataSource.saveProfile(userName, profileWithId).subscribe()
                     it
                 }
         }

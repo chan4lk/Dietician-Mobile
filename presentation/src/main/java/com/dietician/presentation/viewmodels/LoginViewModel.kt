@@ -1,13 +1,15 @@
 package com.dietician.presentation.viewmodels
 
-import android.text.TextUtils
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.toLiveData
 import com.dietician.domain.repository.TokenRepository
 import com.dietician.domain.usecases.LoginTask
 import com.dietician.presentation.mapper.TokenEntityMapper
 import com.dietician.presentation.model.Resource
+import com.dietician.presentation.model.Status
+import com.dietician.presentation.model.Token
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -19,18 +21,18 @@ class LoginViewModel @Inject constructor(
     private val tokenMapper: TokenEntityMapper,
     private val tokenRepository: TokenRepository
 ) : ViewModel() {
-    private val _loggedIn = MutableLiveData<Boolean>().apply {
-        value = false
-    }
-    val loggedIn: LiveData<Boolean> = _loggedIn
+    private val loginMediator = MediatorLiveData<Resource<Token>>()
+
+    val source: LiveData<Resource<Token>>
+        get() = loginMediator
+
     private val disposables = CompositeDisposable()
     fun login(userName: String, password: String) {
         val params = LoginTask.Params(userName, password)
-        disposables.add(
+        val resource =
             loginTask.buildUseCase(params)
                 .map {
                     tokenRepository.setToken(it.token)
-                    _loggedIn.postValue(!TextUtils.isEmpty(it.token))
                     tokenMapper.to(it)
                 }
                 .map { Resource.success(it) }
@@ -40,10 +42,16 @@ class LoginViewModel @Inject constructor(
                         Observable.just(Resource.error(it.localizedMessage!!))
                     }
                 ).toFlowable(BackpressureStrategy.LATEST)
-                .subscribe()
-        )
+                .toLiveData()
+        loginMediator.addSource(resource) {
+            loginMediator.value = it
+            if (it.status != Status.LOADING) {
+                loginMediator.removeSource(resource)
+            }
+        }
 
     }
+
 
     override fun onCleared() {
         super.onCleared()

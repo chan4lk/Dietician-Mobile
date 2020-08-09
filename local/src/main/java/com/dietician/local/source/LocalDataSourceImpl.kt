@@ -14,6 +14,7 @@ import com.dietician.local.model.PlanLocal
 import com.dietician.local.model.ProfileLocal
 import com.dietician.local.model.TokenLocal
 import com.dietician.local.model.UserLocal
+import io.reactivex.Completable
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -59,10 +60,24 @@ class LocalDataSourceImpl @Inject constructor(
             }
     }
 
-    override fun saveToken(userName: String, tokenData: TokenData) {
-        return tokenDAO.addToken(
-            tokenMapper.to(tokenData, userName)
+    override fun saveToken(userName: String, tokenData: TokenData): Completable {
+        val getToken = tokenDAO.getToken(userName)
+        val tokenEntity = tokenMapper.to(tokenData, userName)
+        val addToken = tokenDAO.addToken(
+            tokenEntity
         )
+
+        val updateToken = tokenDAO.updateToken(
+            tokenEntity
+        )
+        return getToken.concatMapCompletable {
+            if (it.token != "") {
+                return@concatMapCompletable addToken
+            } else {
+                return@concatMapCompletable updateToken
+            }
+        }
+
     }
 
     override fun savePlans(userName: String, plans: List<PlanData>) {
@@ -71,7 +86,8 @@ class LocalDataSourceImpl @Inject constructor(
         )
     }
 
-    override fun saveProfile(userName: String, profile: ProfileData) {
+    override fun saveProfile(userName: String, profile: ProfileData): Completable {
         return profileDAO.addProfile(profileMapper.to(profile, userName))
     }
 }
+

@@ -17,7 +17,7 @@ interface TokenDAO {
     fun updateToken(tokenLocal: TokenLocal): Completable
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addToken(tokenLocal: TokenLocal)
+    fun addToken(tokenLocal: TokenLocal): Completable
 
     @Query("DELETE FROM token")
     fun clearCachedToken(): Completable

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
 import com.dietician.presentation.model.Profile
+import com.dietician.presentation.model.Status
 import com.dietician.presentation.viewmodels.ProfileViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -67,9 +68,19 @@ class ProfileFragment : Fragment() {
             )
         }
 
-        viewModel.saved.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                true -> findNavController().navigate(R.id.nav_plan)
+        viewModel.source.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.LOADING -> {
+                    saveButton.isEnabled = false
+                }
+                Status.ERROR -> {
+                    saveButton.isEnabled = true
+                }
+                Status.SUCCESS -> {
+                    if (it.data!! > 0) {
+                        findNavController().navigate(R.id.nav_plan)
+                    }
+                }
             }
         })
         return root

@@ -17,7 +17,7 @@ interface ProfileDAO {
     fun updateProfile(profile: ProfileLocal): Completable
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addProfile(profile: ProfileLocal)
+    fun addProfile(profile: ProfileLocal): Completable
 
     @Query("DELETE FROM profile")
     fun clearCachedProfiles(): Completable

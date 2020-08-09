@@ -14,7 +14,7 @@ import com.dietician.local.model.UserLocal
 
 @Database(
     entities = [TokenLocal::class, PlanLocal::class, UserLocal::class, ProfileLocal::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
