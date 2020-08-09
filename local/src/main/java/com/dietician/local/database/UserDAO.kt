@@ -14,7 +14,7 @@ interface UserDAO {
     fun getActiveUser(): Observable<UserLocal>
 
     @Update
-    fun updateToken(user: UserLocal): Completable
+    fun updateUser(user: UserLocal): Completable
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addUser(user: UserLocal)

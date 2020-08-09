@@ -1,9 +1,12 @@
 package com.dietician.data.repository
 
-import com.dietician.data.mapper.PlanDomainDataMapper
-import com.dietician.data.mapper.TokenDomainDataMapper
-import com.dietician.data.mapper.UserDomainDataMapper
+import com.dietician.data.mapper.Mapper
+import com.dietician.data.model.PlanData
+import com.dietician.data.model.ProfileData
+import com.dietician.data.model.TokenData
+import com.dietician.data.model.UserData
 import com.dietician.domain.entities.PlanEntity
+import com.dietician.domain.entities.ProfileEntity
 import com.dietician.domain.entities.TokenEntity
 import com.dietician.domain.entities.UserEntity
 import com.dietician.domain.repository.DietRepository
@@ -12,9 +15,10 @@ import io.reactivex.functions.Function
 import javax.inject.Inject
 
 class DietRepositoryImpl @Inject constructor(
-    private val tokenDomainDataMapper: TokenDomainDataMapper,
-    private val planDomainDataMapper: PlanDomainDataMapper,
-    private val userDomainDataMapper: UserDomainDataMapper,
+    private val tokenDomainDataMapper: Mapper<TokenEntity, TokenData>,
+    private val planDomainDataMapper: Mapper<PlanEntity, PlanData>,
+    private val userDomainDataMapper: Mapper<UserEntity, UserData>,
+    private val profileMapper: Mapper<ProfileEntity, ProfileData>,
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) : DietRepository {
@@ -53,6 +57,36 @@ class DietRepositoryImpl @Inject constructor(
                 it
             }
             .onErrorResumeNext(Function { Observable.just(0) })
+    }
+
+    override fun saveProfile(profile: ProfileEntity): Observable<Long> {
+        val profileData = profileMapper.to(profile)
+        val user = localDataSource.getActiveUser()
+
+        return user.switchMap { userData ->
+            val userName = userData.email
+            val userId = userData.id
+            profileData.userId = userId
+
+            val saveProfile = remoteDataSource.saveProfile(profileData)
+
+            return@switchMap saveProfile
+                .map {
+                    val profileWithId = ProfileData(
+                        id = it,
+                        name = profile.name,
+                        isVegetarian = profile.isVegetarian,
+                        isPregnant = profile.isPregnant,
+                        gender = profile.gender,
+                        weight = profile.weight,
+                        height = profile.height,
+                        age = profile.age,
+                        userId = userId
+                    )
+                    localDataSource.saveProfile(userName, profileWithId)
+                    it
+                }
+        }
     }
 
 }

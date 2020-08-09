@@ -34,6 +34,7 @@ class LoginViewModel @Inject constructor(
                     tokenMapper.to(it)
                 }
                 .map { Resource.success(it) }
+                .startWith(Resource.loading())
                 .onErrorResumeNext(
                     Function {
                         Observable.just(Resource.error(it.localizedMessage!!))

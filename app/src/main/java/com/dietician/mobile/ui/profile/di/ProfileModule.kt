@@ -2,7 +2,7 @@ package com.dietician.mobile.ui.profile.di
 
 import androidx.lifecycle.ViewModel
 import com.dietician.mobile.di.ViewModelKey
-import com.dietician.mobile.ui.profile.ProfileViewModel
+import com.dietician.presentation.viewmodels.ProfileViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

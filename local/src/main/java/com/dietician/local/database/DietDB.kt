@@ -8,11 +8,12 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.dietician.local.mapper.Converters
 import com.dietician.local.model.PlanLocal
+import com.dietician.local.model.ProfileLocal
 import com.dietician.local.model.TokenLocal
 import com.dietician.local.model.UserLocal
 
 @Database(
-    entities = [TokenLocal::class, PlanLocal::class, UserLocal::class],
+    entities = [TokenLocal::class, PlanLocal::class, UserLocal::class, ProfileLocal::class],
     version = 1,
     exportSchema = false
 )
@@ -47,4 +48,6 @@ abstract class DietDB : RoomDatabase() {
     abstract fun getPlanDao(): PlanDAO
 
     abstract fun getUserDao(): UserDAO
+
+    abstract fun getProfileDao(): ProfileDAO
 }
