@@ -13,17 +13,15 @@ import com.dietician.presentation.model.Resource
 import com.dietician.presentation.model.Status
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val saveProfileTask: SaveProfileTask,
-    private val getProfileTask: GetProfileTask,
+    getProfileTask: GetProfileTask,
     private val profileMapper: ProfileEntityMapper,
-    private val tokenRepository: TokenRepository
+    tokenRepository: TokenRepository
 ) : ViewModel() {
-    private val disposables = CompositeDisposable()
     private val mediator = MediatorLiveData<Resource<Profile>>()
     private val mediatorSave = MediatorLiveData<Resource<Profile>>()
 
@@ -80,8 +78,4 @@ class ProfileViewModel @Inject constructor(
 
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposables.dispose()
-    }
 }

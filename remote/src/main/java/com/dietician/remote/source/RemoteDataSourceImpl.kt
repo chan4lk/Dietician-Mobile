@@ -63,7 +63,11 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override fun saveProfile(profile: ProfileData): Observable<Long> {
-        return profileApi.saveProfile(profileMapper.to(profile))
+        return if (profile.id > 0) {
+            profileApi.updateProfile(profile.id, profile = profileMapper.to(profile))
+        } else {
+            profileApi.saveProfile(profileMapper.to(profile))
+        }
     }
 
     override fun getProfile(userId: Long): Observable<ProfileData> {

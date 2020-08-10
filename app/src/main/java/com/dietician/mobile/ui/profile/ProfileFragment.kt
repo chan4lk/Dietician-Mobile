@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
-import com.dietician.presentation.model.Gender
+import com.dietician.presentation.model.Gender.FEMALE
 import com.dietician.presentation.model.Gender.MALE
 import com.dietician.presentation.model.Profile
 import com.dietician.presentation.model.Status
@@ -30,6 +30,8 @@ class ProfileFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val viewModel by viewModels<ProfileViewModel> { viewModelFactory }
+
+    private var id: Long = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -59,12 +61,12 @@ class ProfileFragment : Fragment() {
 
         saveButton.setOnClickListener {
             val isMale = when (maleGender.isChecked) {
-                true -> Gender.MALE.ordinal
-                false -> Gender.FEMALE.ordinal
+                true -> MALE.ordinal
+                false -> FEMALE.ordinal
             }
             viewModel.save(
                 Profile(
-                    id = 0,
+                    id = id,
                     userId = 0,
                     age = age.text.toString().toInt(),
                     weight = weight.text.toString().toDouble(),
@@ -91,6 +93,7 @@ class ProfileFragment : Fragment() {
                     saveButton.isEnabled = true
 
                     it.data?.let { profile ->
+                        id = profile.id
                         age.setText(profile.age.toString())
                         weight.setText(profile.weight.toString())
                         height.setText(profile.height.toString())
