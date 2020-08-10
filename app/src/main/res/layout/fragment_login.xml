@@ -56,7 +56,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_btn"
-        style="?attr/actionButtonStyle"
+        style="?attr/buttonStyle"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
@@ -71,7 +71,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/nav_signup_btn"
-        style="?attr/actionButtonStyle"
+        style="?attr/buttonStyle"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"

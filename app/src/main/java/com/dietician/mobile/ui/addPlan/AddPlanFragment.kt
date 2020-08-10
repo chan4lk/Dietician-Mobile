@@ -40,16 +40,27 @@ class AddPlanFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_add_plan, container, false)
 
         activity?.resources?.let {
-            val countries = it.getStringArray(R.array.activity_levels)
+            val activityLevels = it.getStringArray(R.array.activity_levels)
             val adapter = ArrayAdapter(
                 requireContext(),
                 R.layout.activity_dropdown_menu_popup_item,
-                countries
+                activityLevels
             )
 
-            val editTextFilledExposedDropdown: AutoCompleteTextView =
+            val paceLevelDropdown: AutoCompleteTextView =
                 root.findViewById(R.id.filled_exposed_dropdown)
-            editTextFilledExposedDropdown.setAdapter(adapter)
+            paceLevelDropdown.setAdapter(adapter)
+
+            val paceLevels = it.getStringArray(R.array.pace_levels)
+            val paceAdapter = ArrayAdapter(
+                requireContext(),
+                R.layout.activity_dropdown_menu_popup_item,
+                paceLevels
+            )
+
+            val activityLevelDropdown: AutoCompleteTextView =
+                root.findViewById(R.id.pace_filled_exposed_dropdown)
+            activityLevelDropdown.setAdapter(paceAdapter)
         }
 
         return root
