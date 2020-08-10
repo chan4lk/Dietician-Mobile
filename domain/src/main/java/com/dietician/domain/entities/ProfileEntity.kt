@@ -2,7 +2,6 @@ package com.dietician.domain.entities
 
 data class ProfileEntity(
     val id: Long,
-    val name: String,
     val age: Int,
     val height: Double,
     val weight: Double,

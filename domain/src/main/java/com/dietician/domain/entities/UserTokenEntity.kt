@@ -1,6 +1,6 @@
-package com.dietician.presentation.model
+package com.dietician.domain.entities
 
-data class Token(
+data class UserTokenEntity(
     val id: Long,
     val email: String,
     val password: String,

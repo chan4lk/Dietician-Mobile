@@ -8,7 +8,6 @@ class ProfileDomainDataMapper @Inject constructor() : Mapper<ProfileEntity, Prof
     override fun from(e: ProfileData): ProfileEntity {
         return ProfileEntity(
             id = e.id,
-            name = e.name,
             age = e.age,
             height = e.height,
             weight = e.weight,
@@ -23,7 +22,6 @@ class ProfileDomainDataMapper @Inject constructor() : Mapper<ProfileEntity, Prof
     override fun to(t: ProfileEntity): ProfileData {
         return ProfileData(
             id = t.id,
-            name = t.name,
             age = t.age,
             height = t.height,
             weight = t.weight,

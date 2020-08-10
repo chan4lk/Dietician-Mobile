@@ -6,6 +6,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface ProfileApi {
-    @POST("Profile")
+    @POST("Profiles")
     fun saveProfile(@Body profile: Profile): Observable<Long>
 }

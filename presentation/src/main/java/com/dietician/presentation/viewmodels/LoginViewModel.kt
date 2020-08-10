@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.toLiveData
+import com.dietician.domain.entities.UserTokenEntity
 import com.dietician.domain.repository.TokenRepository
 import com.dietician.domain.usecases.LoginTask
-import com.dietician.presentation.mapper.TokenEntityMapper
+import com.dietician.presentation.mapper.Mapper
 import com.dietician.presentation.model.Resource
 import com.dietician.presentation.model.Status
 import com.dietician.presentation.model.Token
@@ -18,7 +19,7 @@ import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(
     private val loginTask: LoginTask,
-    private val tokenMapper: TokenEntityMapper,
+    private val tokenMapper: Mapper<UserTokenEntity, Token>,
     private val tokenRepository: TokenRepository
 ) : ViewModel() {
     private val loginMediator = MediatorLiveData<Resource<Token>>()
@@ -32,7 +33,7 @@ class LoginViewModel @Inject constructor(
         val resource =
             loginTask.buildUseCase(params)
                 .map {
-                    tokenRepository.setToken(it.token)
+                    tokenRepository.setToken(it)
                     tokenMapper.to(it)
                 }
                 .map { Resource.success(it) }

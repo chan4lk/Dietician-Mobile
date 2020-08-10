@@ -3,19 +3,18 @@ package com.dietician.data.repository
 import com.dietician.data.mapper.Mapper
 import com.dietician.data.model.PlanData
 import com.dietician.data.model.ProfileData
-import com.dietician.data.model.TokenData
 import com.dietician.data.model.UserData
+import com.dietician.data.model.UserTokenData
 import com.dietician.domain.entities.PlanEntity
 import com.dietician.domain.entities.ProfileEntity
-import com.dietician.domain.entities.TokenEntity
 import com.dietician.domain.entities.UserEntity
+import com.dietician.domain.entities.UserTokenEntity
 import com.dietician.domain.repository.DietRepository
 import io.reactivex.Observable
-import io.reactivex.functions.Function
 import javax.inject.Inject
 
 class DietRepositoryImpl @Inject constructor(
-    private val tokenDomainDataMapper: Mapper<TokenEntity, TokenData>,
+    private val tokenDomainDataMapper: Mapper<UserTokenEntity, UserTokenData>,
     private val planDomainDataMapper: Mapper<PlanEntity, PlanData>,
     private val userDomainDataMapper: Mapper<UserEntity, UserData>,
     private val profileMapper: Mapper<ProfileEntity, ProfileData>,
@@ -23,50 +22,50 @@ class DietRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource
 ) : DietRepository {
 
-    override fun login(userName: String, password: String): Observable<TokenEntity> {
+    override fun login(userName: String, password: String): Observable<UserTokenEntity> {
         val tokenObservable = localDataSource.login(userName, password)
             .map { tokenDomainDataMapper.from(it) }
 
         return remoteDataSource.login(userName, password)
             .map {
-                localDataSource.saveToken(userName, it).subscribe()
+                localDataSource.saveUser(it).subscribe()
                 tokenDomainDataMapper.from(it)
             }
             .concatWith(tokenObservable)
     }
 
-    override fun getPlans(token: String): Observable<List<PlanEntity>> {
-        val localPlans = localDataSource.getPlans(token)
+    override fun getPlans(userName: String): Observable<List<PlanEntity>> {
+        val localPlans = localDataSource.getPlans(userName)
             .map { plans ->
                 plans.map { planDomainDataMapper.from(it) }
             }
 
-        return remoteDataSource.getPlans(token)
+        return remoteDataSource.getPlans(userName)
             .map { plans ->
-                localDataSource.savePlans(token, plans)
+                localDataSource.savePlans(userName, plans)
                 plans.map { planDomainDataMapper.from(it) }
             }.onErrorResumeNext(Observable.empty())
             .concatWith(localPlans)
     }
 
-    override fun signUp(user: UserEntity): Observable<Long> {
+    override fun signUp(user: UserEntity): Observable<UserTokenEntity> {
         val userData = userDomainDataMapper.to(user)
         return remoteDataSource.signUp(userData)
-            .map {
-                localDataSource.saveUser(userData)
-                it
+            .switchMap {
+                login(user.email, user.password)
             }
-            .onErrorResumeNext(Function { Observable.just(0) })
     }
 
     override fun saveProfile(profile: ProfileEntity): Observable<Long> {
 
-        return localDataSource.getActiveUser().flatMap { userData ->
-            callRemote(profile, userData)
-        }
+        return localDataSource.getActiveUser()
+            .onErrorResumeNext(Observable.empty())
+            .flatMap { userData ->
+                callRemote(profile, userData)
+            }
     }
 
-    private fun callRemote(profile: ProfileEntity, userData: UserData): Observable<Long> {
+    private fun callRemote(profile: ProfileEntity, userData: UserTokenData): Observable<Long> {
         val profileData = profileMapper.to(profile)
         val userName = userData.email
         val userId = userData.id
@@ -76,7 +75,6 @@ class DietRepositoryImpl @Inject constructor(
             .map {
                 val profileWithId = ProfileData(
                     id = it,
-                    name = profile.name,
                     isVegetarian = profile.isVegetarian,
                     isPregnant = profile.isPregnant,
                     gender = profile.gender,

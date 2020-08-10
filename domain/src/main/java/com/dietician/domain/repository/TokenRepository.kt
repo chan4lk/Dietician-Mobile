@@ -1,7 +1,9 @@
 package com.dietician.domain.repository
 
-interface TokenRepository {
-    fun getToken(): String
+import com.dietician.domain.entities.UserTokenEntity
 
-    fun setToken(token: String)
+interface TokenRepository {
+    fun getToken(): UserTokenEntity
+
+    fun setToken(token: UserTokenEntity)
 }

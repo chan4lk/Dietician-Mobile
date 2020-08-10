@@ -10,5 +10,6 @@ data class UserLocal(
     @ColumnInfo(name = "user_name") val userName: String,
     @ColumnInfo(name = "first_name") val firstName: String,
     @ColumnInfo(name = "last_name") val lastName: String,
-    @ColumnInfo(name = "password") val password: String
+    @ColumnInfo(name = "password") val password: String,
+    @ColumnInfo(name = "token") val token: String
 )

@@ -8,7 +8,6 @@ class ProfileMapper @Inject constructor() : Mapper<ProfileData, Profile> {
     override fun from(e: Profile): ProfileData {
         return ProfileData(
             id = e.id,
-            name = e.name,
             age = e.age,
             height = e.height,
             weight = e.weight,
@@ -22,7 +21,6 @@ class ProfileMapper @Inject constructor() : Mapper<ProfileData, Profile> {
     override fun to(t: ProfileData): Profile {
         return Profile(
             id = t.id,
-            name = t.name,
             age = t.age,
             height = t.height,
             weight = t.weight,

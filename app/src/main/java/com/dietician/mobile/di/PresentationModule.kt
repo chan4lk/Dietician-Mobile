@@ -2,7 +2,7 @@ package com.dietician.mobile.di
 
 import com.dietician.domain.entities.PlanEntity
 import com.dietician.domain.entities.ProfileEntity
-import com.dietician.domain.entities.TokenEntity
+import com.dietician.domain.entities.UserTokenEntity
 import com.dietician.presentation.mapper.Mapper
 import com.dietician.presentation.mapper.PlanEntityMapper
 import com.dietician.presentation.mapper.ProfileEntityMapper
@@ -18,7 +18,7 @@ abstract class PresentationModule {
     @Binds
     abstract fun bindTokenMapper(
         tokenEntityMapper: TokenEntityMapper
-    ): Mapper<TokenEntity, Token>
+    ): Mapper<UserTokenEntity, Token>
 
     @Binds
     abstract fun bindPlanMapper(

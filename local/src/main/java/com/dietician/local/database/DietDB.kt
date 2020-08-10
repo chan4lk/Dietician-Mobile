@@ -43,8 +43,6 @@ abstract class DietDB : RoomDatabase() {
         }
     }
 
-    abstract fun getTokenDao(): TokenDAO
-
     abstract fun getPlanDao(): PlanDAO
 
     abstract fun getUserDao(): UserDAO

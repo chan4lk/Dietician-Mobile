@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ProgressBar
 import android.widget.RadioGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -43,7 +45,6 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_health_profile, container, false)
-        val name: TextInputEditText = root.findViewById(R.id.name_text)
         val age: TextInputEditText = root.findViewById(R.id.age_text)
         val weight: TextInputEditText = root.findViewById(R.id.weight_text)
         val height: TextInputEditText = root.findViewById(R.id.height_text)
@@ -51,8 +52,13 @@ class ProfileFragment : Fragment() {
         val isPregnant: CheckBox = root.findViewById(R.id.isPregnant)
         val isVeg: CheckBox = root.findViewById(R.id.isVeg)
         val saveButton: MaterialButton = root.findViewById(R.id.save_profile_btn)
+        val loading: ProgressBar = root.findViewById(R.id.loading)
 
         saveButton.setOnClickListener {
+            val isMale = when (gender.checkedRadioButtonId == R.id.male_radio_btn) {
+                true -> 0
+                false -> 1
+            }
             viewModel.save(
                 Profile(
                     id = 0,
@@ -62,8 +68,7 @@ class ProfileFragment : Fragment() {
                     height = height.text.toString().toDouble(),
                     isPregnant = isPregnant.isChecked,
                     isVegetarian = isVeg.isChecked,
-                    name = name.text.toString(),
-                    gender = gender.checkedRadioButtonId
+                    gender = isMale
                 )
             )
         }
@@ -71,12 +76,16 @@ class ProfileFragment : Fragment() {
         viewModel.source.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.LOADING -> {
-                    saveButton.isEnabled = false
+                    loading.isVisible = true
+                    saveButton.isEnabled = true
                 }
                 Status.ERROR -> {
+                    loading.isVisible = false
                     saveButton.isEnabled = true
                 }
                 Status.SUCCESS -> {
+                    loading.isVisible = false
+                    saveButton.isEnabled = true
                     if (it.data!! > 0) {
                         findNavController().navigate(R.id.nav_plan)
                     }

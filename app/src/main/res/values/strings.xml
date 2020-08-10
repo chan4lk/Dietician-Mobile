@@ -70,4 +70,5 @@
     <string name="menu_sign_up">SignUp</string>
     <string name="prompt_firstname">FirstName</string>
     <string name="prompt_lastname">Last Name</string>
+    <string name="action_logout">Logout</string>
 </resources>

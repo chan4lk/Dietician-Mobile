@@ -23,6 +23,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:hint="@string/name"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -54,6 +55,7 @@
                 android:id="@+id/age_text"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:inputType="number"
                 android:maxLines="1"
                 android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +121,7 @@
             app:layout_constraintBottom_toTopOf="@+id/gender_radio_group"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/weight_text_wrapper"></com.google.android.material.textview.MaterialTextView>
+            app:layout_constraintTop_toBottomOf="@+id/weight_text_wrapper" />
 
 
         <RadioGroup
@@ -211,6 +213,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkboxLayout" />
 
-
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

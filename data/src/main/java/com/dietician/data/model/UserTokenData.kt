@@ -1,6 +1,6 @@
-package com.dietician.presentation.model
+package com.dietician.data.model
 
-data class Token(
+data class UserTokenData(
     val id: Long,
     val email: String,
     val password: String,

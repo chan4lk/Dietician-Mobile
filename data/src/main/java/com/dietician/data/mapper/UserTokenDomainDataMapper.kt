@@ -1,11 +1,11 @@
-package com.dietician.presentation.mapper
+package com.dietician.data.mapper
 
+import com.dietician.data.model.UserTokenData
 import com.dietician.domain.entities.UserTokenEntity
-import com.dietician.presentation.model.Token
 import javax.inject.Inject
 
-class TokenEntityMapper @Inject constructor() : Mapper<UserTokenEntity, Token> {
-    override fun from(e: Token): UserTokenEntity {
+class UserTokenDomainDataMapper @Inject constructor() : Mapper<UserTokenEntity, UserTokenData> {
+    override fun from(e: UserTokenData): UserTokenEntity {
         return UserTokenEntity(
             id = e.id,
             email = e.email,
@@ -16,8 +16,8 @@ class TokenEntityMapper @Inject constructor() : Mapper<UserTokenEntity, Token> {
         )
     }
 
-    override fun to(t: UserTokenEntity): Token {
-        return Token(
+    override fun to(t: UserTokenEntity): UserTokenData {
+        return UserTokenData(
             id = t.id,
             email = t.email,
             password = t.password,
@@ -26,6 +26,5 @@ class TokenEntityMapper @Inject constructor() : Mapper<UserTokenEntity, Token> {
             token = t.token
         )
     }
-
 
 }

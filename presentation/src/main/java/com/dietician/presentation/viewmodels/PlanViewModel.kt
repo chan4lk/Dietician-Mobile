@@ -31,7 +31,7 @@ class PlanViewModel @Inject constructor(
     val plansListSource: LiveData<Resource<List<Plan>>>
         get() = planMediator
     private val planResource = getPlansTask
-        .buildUseCase(tokenRepository.getToken())
+        .buildUseCase(tokenRepository.getToken().email)
         .map { planEntities ->
             planEntities.map {
                 planMapper.to(it)

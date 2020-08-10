@@ -1,6 +1,7 @@
 package com.dietician.domain.usecases
 
 import com.dietician.domain.entities.UserEntity
+import com.dietician.domain.entities.UserTokenEntity
 import com.dietician.domain.qualifiers.Background
 import com.dietician.domain.qualifiers.Foreground
 import com.dietician.domain.repository.DietRepository
@@ -13,7 +14,10 @@ class SignUpTask @Inject constructor(
     private val repository: DietRepository,
     @Background backgroundScheduler: Scheduler,
     @Foreground foregroundScheduler: Scheduler
-) : ObservableUseCase<Long, SignUpTask.Params>(backgroundScheduler, foregroundScheduler) {
+) : ObservableUseCase<UserTokenEntity, SignUpTask.Params>(
+    backgroundScheduler,
+    foregroundScheduler
+) {
 
     data class Params(
         val email: String,
@@ -23,7 +27,7 @@ class SignUpTask @Inject constructor(
     )
 
 
-    override fun generateObservable(input: Params?): Observable<Long> {
+    override fun generateObservable(input: Params?): Observable<UserTokenEntity> {
         if (input == null) {
             throw IllegalArgumentException("Sign up info cannot be null")
         }

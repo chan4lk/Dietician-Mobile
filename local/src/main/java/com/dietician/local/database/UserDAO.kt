@@ -10,14 +10,14 @@ interface UserDAO {
     @Query("SELECT * FROM user WHERE user_name = :userName")
     fun getUser(userName: String): Observable<UserLocal>
 
-    @Query("SELECT * FROM user LIMIT 1")
+    @Query("SELECT * FROM user ORDER BY TOKEN DESC LIMIT 1")
     fun getActiveUser(): Observable<UserLocal>
 
-    @Update
-    fun updateUser(user: UserLocal): Completable
+    @Update(onConflict = OnConflictStrategy.IGNORE)
+    fun updateUser(user: UserLocal)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addUser(user: UserLocal)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addUser(user: UserLocal): Completable
 
     @Query("DELETE FROM user")
     fun clearCachedUsers(): Completable
