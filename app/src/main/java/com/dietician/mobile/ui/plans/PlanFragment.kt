@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -110,12 +111,8 @@ class PlanFragment @Inject
     }
 
     override fun onPlanItemClick(planItem: Plan) {
-        //load diet menu screen of the clicked plan item
-//        var foodFrag =  FoodFragment()
-//        activity?.supportFragmentManager?.beginTransaction()
-//            ?.replace(R.id.planFragmentLayout,foodFrag,"foodFrag")
-//            ?.addToBackStack(null)
-//            ?.commit()
+        val bundle = bundleOf("planId" to planItem.id.toLong())
+        findNavController().navigate(R.id.nav_today_diet, bundle)
     }
 
 }
