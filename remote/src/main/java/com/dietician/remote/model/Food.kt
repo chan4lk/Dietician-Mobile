@@ -1,6 +1,6 @@
-package com.dietician.domain.entities
+package com.dietician.remote.model
 
-data class FoodItemEntity(
+data class Food(
     val id: Long,
     val name: String,
     val fat: Double,

@@ -1,14 +1,11 @@
 package com.dietician.mobile.ui.food
 
 import android.annotation.SuppressLint
-import android.provider.ContactsContract
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.dietician.mobile.R
 import com.dietician.mobile.databinding.HeaderBinding
 import com.dietician.mobile.databinding.ListItemFoodBinding
 import com.dietician.presentation.model.Food
@@ -18,10 +15,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-internal val ITEM_VIEW_TYPE_HEADER = 0
-private val ITEM_VIEW_TYPE_ITEM = 1
+internal const val ITEM_VIEW_TYPE_HEADER = 0
+private const val ITEM_VIEW_TYPE_ITEM = 1
 
-class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, RecyclerView.ViewHolder>(FoodDiffCallback()){
+class FoodAdapter(private val clickListener: FoodListener) :
+    ListAdapter<DataItem, RecyclerView.ViewHolder>(FoodDiffCallback()) {
 
     private val adapterScope = CoroutineScope(Dispatchers.Default)
 
@@ -30,19 +28,18 @@ class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, Recyc
             val bfFood = mutableListOf<Food>()
             val lFood = mutableListOf<Food>()
             val dFood = mutableListOf<Food>()
-            val h0 = Header(id=1, title = "There is no diet menu")
-            val h1 = Header(id=1, title = "Break First")
-            val h2 = Header(id=2, title = "Lunch")
-            val h3 = Header(id=3, title = "Dinner")
+            val h0 = Header(id = 1, title = "There is no diet menu")
+            val h1 = Header(id = 1, title = "Break First")
+            val h2 = Header(id = 2, title = "Lunch")
+            val h3 = Header(id = 3, title = "Dinner")
             val items = when (list) {
                 null -> listOf(DataItem.HeaderItem(h0))
-                else ->
-                {
-                    for(fd in list) {
-                        when(fd.headerId){
-                            1-> bfFood.add(fd)
-                            2-> lFood.add(fd)
-                            else-> dFood.add(fd)
+                else -> {
+                    for (fd in list) {
+                        when (fd.type) {
+                            1 -> bfFood.add(fd)
+                            2 -> lFood.add(fd)
+                            else -> dFood.add(fd)
                         }
                     }
                     listOf(DataItem.HeaderItem(h1)) + bfFood.map { DataItem.FoodItem(it) } + listOf(DataItem.HeaderItem(h2)) + lFood.map { DataItem.FoodItem(it) }+ listOf(DataItem.HeaderItem(h3)) + dFood.map { DataItem.FoodItem(it) }
@@ -71,7 +68,7 @@ class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, Recyc
         return when (viewType) {
             ITEM_VIEW_TYPE_HEADER -> TextViewHolder.from(parent)
             ITEM_VIEW_TYPE_ITEM -> ViewHolder.from(parent)
-            else -> throw ClassCastException("Unknown viewType ${viewType}")
+            else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }
 
@@ -82,11 +79,13 @@ class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, Recyc
         }
     }
 
-    class TextViewHolder(val binding: HeaderBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bindHeader(item: Header){
+    class TextViewHolder(private val binding: HeaderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bindHeader(item: Header) {
             binding.title = item
             binding.executePendingBindings()
         }
+
         companion object {
             fun from(parent: ViewGroup): TextViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -96,17 +95,18 @@ class FoodAdapter (val clickListener: FoodListener): ListAdapter<DataItem, Recyc
         }
     }
 
-    class ViewHolder private constructor(val binding: ListItemFoodBinding): RecyclerView.ViewHolder(binding.root){
+    class ViewHolder private constructor(private val binding: ListItemFoodBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Food, clickListener: FoodListener){
-            binding.food =item
-            binding.clickListener =clickListener
+        fun bind(item: Food, clickListener: FoodListener) {
+            binding.food = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
-        companion object{
-            fun from(parent: ViewGroup): ViewHolder{
-                val layoutInflater =LayoutInflater.from(parent.context)
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = ListItemFoodBinding.inflate(layoutInflater, parent, false)
                 return ViewHolder(binding)
             }

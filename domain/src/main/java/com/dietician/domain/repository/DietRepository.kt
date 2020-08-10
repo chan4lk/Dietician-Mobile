@@ -1,9 +1,7 @@
 package com.dietician.domain.repository
 
-import com.dietician.domain.entities.PlanEntity
-import com.dietician.domain.entities.ProfileEntity
-import com.dietician.domain.entities.UserEntity
-import com.dietician.domain.entities.UserTokenEntity
+import com.dietician.domain.entities.*
+import com.dietician.domain.usecases.GetDietTask
 import io.reactivex.Observable
 
 interface DietRepository {
@@ -19,4 +17,6 @@ interface DietRepository {
     fun getProfile(userId: Long): Observable<ProfileEntity>
 
     fun savePlan(plan: PlanEntity): Observable<Long>
+
+    fun getDiet(params: GetDietTask.Params): Observable<DietEntity>
 }

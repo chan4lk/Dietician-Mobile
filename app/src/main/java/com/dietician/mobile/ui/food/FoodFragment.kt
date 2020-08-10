@@ -5,16 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
 import com.dietician.mobile.databinding.FragmentDietBinding
-import com.dietician.presentation.model.Food
+import com.dietician.presentation.model.Status
+import com.dietician.presentation.viewmodels.FoodViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,21 +26,6 @@ class FoodFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private val foodViewModel by viewModels<FoodViewModel> { viewModelFactory }
-
-    private val foodItem: List<Food> = listOf(
-        Food(4, "Coffee", 1),
-        Food(9, "Coffee", 1),
-        Food(10, "Coffee", 1),
-        Food(11, "Coffee", 1),
-        Food(5, "Rice", 2),
-        Food(12, "Rice", 2),
-        Food(13, "Rice", 2),
-        Food(14, "Rice", 2),
-        Food(15, "Rice", 2),
-        Food(6, "Milk",3),
-        Food(7, "Cheese", 1),
-        Food(8, "Cake", 3)
-    )
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -64,18 +52,40 @@ class FoodFragment : Fragment() {
             //Toast.makeText(context, "${nightId}", Toast.LENGTH_LONG).show()
         })
 
-        adapter.addHeaderAndSubmitList(foodItem)
+//        adapter.addHeaderAndSubmitList(foodItem)
         binding.foodListRecyclerView.adapter = adapter
 
         val manager = GridLayoutManager(activity, 3)
         manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
 
-            override fun getSpanSize(position: Int) =  when (adapter.getItemViewType(position)) {
+            override fun getSpanSize(position: Int) = when (adapter.getItemViewType(position)) {
                 ITEM_VIEW_TYPE_HEADER -> 3
                 else -> 1
             }
         }
         binding.foodListRecyclerView.layoutManager = manager
+
+        foodViewModel.load(planId)
+
+        foodViewModel.source.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    binding.loading.isVisible = false
+                    it.data?.let { diet ->
+                        adapter.addHeaderAndSubmitList(diet.foodItems)
+                    }
+                }
+                Status.ERROR -> {
+                    binding.loading.isVisible = false
+                }
+
+                Status.LOADING -> {
+                    binding.loading.isVisible = true
+                }
+            }
+
+        })
+
         return binding.root
     }
 
