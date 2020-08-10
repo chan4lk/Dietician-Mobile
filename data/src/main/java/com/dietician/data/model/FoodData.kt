@@ -4,10 +4,10 @@ data class FoodData(
     val id: Long,
     val name: String,
     val fat: Double,
-    val protine: Long,
-    val carbohydrate: Long,
+    val protine: Double,
+    val carbohydrate: Double,
     val isVeg: Boolean,
     val type: Int,
     val foodCategory: Int,
-    val foodQuantity: Long
+    val foodQuantity: Double
 )

@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface DietApi {
 
-    @GET("api/Diet")
+    @GET("Diet")
     fun getDiet(
         @Query("UserId") userId: Long,
         @Query("PlanId") planId: Long,
