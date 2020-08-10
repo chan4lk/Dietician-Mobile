@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -31,6 +33,7 @@ class PlanFragment @Inject
     private val viewModel by viewModels<PlanViewModel> { viewModelFactory }
 
     lateinit var label: TextView
+    lateinit var loader: ProgressBar
 
 //    var plans: List<String> = emptyList()
     private val plans = listOf(
@@ -55,6 +58,7 @@ class PlanFragment @Inject
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_plan, container, false)
         label = root.findViewById(R.id.no_plan_label)
+        loader = root.findViewById(R.id.loading)
         planAdapter.setClickListener(this)
 
         return root
@@ -66,12 +70,14 @@ class PlanFragment @Inject
         viewModel.plansListSource.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.LOADING -> {
-
+                    loader.isVisible = true
                 }
                 Status.ERROR -> {
+                    loader.isVisible = false
 
                 }
                 Status.SUCCESS -> {
+                    loader.isVisible = false
                     it.data?.let { plans ->
                         planAdapter.setPlanItem(plans)
                     }

@@ -60,33 +60,34 @@ class DietRepositoryImpl @Inject constructor(
     }
 
     override fun saveProfile(profile: ProfileEntity): Observable<Long> {
-        val profileData = profileMapper.to(profile)
-        val user = localDataSource.getActiveUser()
 
-        return user.switchMap { userData ->
-            val userName = userData.email
-            val userId = userData.id
-            profileData.userId = userId
-
-            val saveProfile = remoteDataSource.saveProfile(profileData)
-
-            return@switchMap saveProfile
-                .map {
-                    val profileWithId = ProfileData(
-                        id = it,
-                        name = profile.name,
-                        isVegetarian = profile.isVegetarian,
-                        isPregnant = profile.isPregnant,
-                        gender = profile.gender,
-                        weight = profile.weight,
-                        height = profile.height,
-                        age = profile.age,
-                        userId = userId
-                    )
-                    localDataSource.saveProfile(userName, profileWithId).subscribe()
-                    it
-                }
+        return localDataSource.getActiveUser().flatMap { userData ->
+            callRemote(profile, userData)
         }
+    }
+
+    private fun callRemote(profile: ProfileEntity, userData: UserData): Observable<Long> {
+        val profileData = profileMapper.to(profile)
+        val userName = userData.email
+        val userId = userData.id
+        profileData.userId = userId
+
+        return remoteDataSource.saveProfile(profileData)
+            .map {
+                val profileWithId = ProfileData(
+                    id = it,
+                    name = profile.name,
+                    isVegetarian = profile.isVegetarian,
+                    isPregnant = profile.isPregnant,
+                    gender = profile.gender,
+                    weight = profile.weight,
+                    height = profile.height,
+                    age = profile.age,
+                    userId = userId
+                )
+                localDataSource.saveProfile(userName, profileWithId).subscribe()
+                it
+            }
     }
 
 }
