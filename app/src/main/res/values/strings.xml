@@ -72,9 +72,12 @@
     <string name="prompt_lastname">Last Name</string>
     <string name="action_logout">Logout</string>
     <string name="hint_activity_level">Activity Level</string>
-    <string name="activity_level_1">Activity Level 1</string>
-    <string name="activity_level_2">Activity Level 2</string>
-    <string name="activity_level_3">Activity Level 3</string>
+    <string name="activity_level_1">Sedentary(little or no exercise)</string>
+    <string name="activity_level_2">Slightly</string>
+    <string name="activity_level_3">Moderately</string>
+    <string name="activity_level_4">Very Active</string>
+    <string name="activity_level_5">Extra Active</string>
+    <string name="activity_level_6">Professional Athlete</string>
 
     <string name="goal_hint_maintain">Maintain Weight</string>
     <string name="goal_hint_change">Change Weight</string>
@@ -82,10 +85,13 @@
         <item>@string/activity_level_1</item>
         <item>@string/activity_level_2</item>
         <item>@string/activity_level_3</item>
+        <item>@string/activity_level_4</item>
+        <item>@string/activity_level_5</item>
+        <item>@string/activity_level_6</item>
     </string-array>
 
-    <string name="pace_level_1">500g Per Week</string>
-    <string name="pace_level_2">1000g Per Week</string>
+    <string name="pace_level_1">Normal 0.5kg per Week</string>
+    <string name="pace_level_2">Strict 1kg per Week</string>
     <string name="pace_level_3">Custom Weeks</string>
     <string name="weeks_range">Duration in Weeks</string>
     <string name="hint_pace_level">Pace</string>

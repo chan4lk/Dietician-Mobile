@@ -37,6 +37,10 @@ class AddPlanFragment : Fragment() {
 
     private val addPlanViewModel by viewModels<AddPlanViewModel> { viewModelFactory }
 
+    private var selectedPacePosition = -1
+
+    private var selectedActivityLevelPosition = -1
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (requireActivity()
@@ -47,18 +51,12 @@ class AddPlanFragment : Fragment() {
             .inject(this)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val root = inflater.inflate(R.layout.fragment_add_plan, container, false)
         val goalSwitch: SwitchMaterial = root.findViewById(R.id.goal_switch)
-        val activityLevelDropdown: AutoCompleteTextView =
-            root.findViewById(R.id.filled_exposed_dropdown)
-        val paceLevelDropdown: AutoCompleteTextView =
-            root.findViewById(R.id.pace_filled_exposed_dropdown)
+        val activityLevelDropdown: AutoCompleteTextView = root.findViewById(R.id.filled_exposed_dropdown)
+        val paceLevelDropdown: AutoCompleteTextView = root.findViewById(R.id.pace_filled_exposed_dropdown)
         val targetTextWrapper: TextInputLayout = root.findViewById(R.id.target_weight_text_wrapper)
         val paceTextWrapper: TextInputLayout = root.findViewById(R.id.pace_textInputLayout)
         val targetText: TextInputEditText = root.findViewById(R.id.target_weight)
@@ -88,8 +86,13 @@ class AddPlanFragment : Fragment() {
             paceLevelDropdown.onItemClickListener =
                 AdapterView.OnItemClickListener { _, _, position, _ ->
                     val item = paceAdapter.getItem(position)
+                    selectedPacePosition = position
                     Timber.d(item)
                     slider.isVisible = item == res.getString(R.string.pace_level_3)
+                }
+            activityLevelDropdown.onItemClickListener =
+                AdapterView.OnItemClickListener{_, _, position, _ ->
+                    selectedActivityLevelPosition = position
                 }
 
             goalSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -100,19 +103,19 @@ class AddPlanFragment : Fragment() {
                         paceTextWrapper.isVisible = false
                         targetText.isVisible = false
                         slider.isVisible = false
-                        goalSwitch.text = res.getString(R.string.goal_hint_change)
+                        goalSwitch.text = res.getString(R.string.goal_hint_maintain)
                     }
                     else -> {
                         paceLevelDropdown.isVisible = true
                         targetTextWrapper.isVisible = true
                         paceTextWrapper.isVisible = true
                         targetText.isVisible = true
-                        goalSwitch.text = res.getString(R.string.goal_hint_maintain)
-                        val position = paceLevelDropdown.listSelection
+                        goalSwitch.text = res.getString(R.string.goal_hint_change)
+                        val position = selectedPacePosition
                         if (position != -1) {
-                            slider.isVisible = position == 3
+                            slider.isVisible = position == 2
                         } else {
-                            paceLevelDropdown.listSelection = 1
+                            paceLevelDropdown.listSelection = 0
                         }
                     }
                 }
@@ -125,25 +128,21 @@ class AddPlanFragment : Fragment() {
             targetText.isVisible = false
             slider.isVisible = false
 
-
         }
-
-
-
 
         saveButton.setOnClickListener {
             addPlanViewModel.save(
                 Plan(
                     id = 0,
                     userId = 0,
-                    activityLevel = activityLevelDropdown.listSelection,
+                    activityLevel = selectedActivityLevelPosition,
                     goal = when (goalSwitch.isEnabled) {
-                        true -> 1
-                        else -> 0
+                        true -> 0 //change weight
+                        else -> 1 // maintain weight
                     },
-                    pace = when (paceLevelDropdown.listSelection == -1) {
-                        true -> 0
-                        else -> paceLevelDropdown.listSelection
+                    pace = when (goalSwitch.isEnabled) {
+                        true -> selectedPacePosition
+                        else -> 4 //value which is not in dropdown
                     },
                     name = nameText.text.toString(),
                     duration = slider.value.toLong(),
