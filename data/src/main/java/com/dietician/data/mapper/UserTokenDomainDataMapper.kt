@@ -27,4 +27,26 @@ class UserTokenDomainDataMapper @Inject constructor() : Mapper<UserTokenEntity, 
         )
     }
 
+    override fun from(e: UserTokenData, userId: Long): UserTokenEntity {
+        return UserTokenEntity(
+            id = userId,
+            email = e.email,
+            password = e.password,
+            firstName = e.firstName,
+            lastName = e.lastName,
+            token = e.token
+        )
+    }
+
+    override fun to(t: UserTokenEntity, userId: Long): UserTokenData {
+        return UserTokenData(
+            id = userId,
+            email = t.email,
+            password = t.password,
+            firstName = t.firstName,
+            lastName = t.lastName,
+            token = t.token
+        )
+    }
+
 }

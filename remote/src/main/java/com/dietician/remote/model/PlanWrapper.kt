@@ -2,9 +2,13 @@ package com.dietician.remote.model
 
 data class PlanWrapper(
     val id: Number,
-    val target: Number,
     val name: String,
+    val activityLevel: Int,
+    val goal: Int,
+    val pace: Int,
+    val target: Number,
     val duration: Number,
     val startDate: String,
-    val status: Number
+    val status: Number,
+    val userId: Long
 )

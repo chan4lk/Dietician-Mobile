@@ -12,19 +12,26 @@ class PlanDataLocalMapper @Inject constructor() : Mapper<PlanData, PlanLocal> {
             duration = e.duration,
             startDate = e.startDate,
             status = e.status,
-            target = e.target
+            target = e.target,
+            userId = e.userId,
+            activityLevel = e.activityLevel,
+            goal = e.goal,
+            pace = e.pace
         )
     }
 
     override fun to(t: PlanData, userId: Long): PlanLocal {
         return PlanLocal(
             id = t.id,
-            userId = userId,
             name = t.name,
             duration = t.duration,
             startDate = t.startDate,
             status = t.status,
-            target = t.target
+            target = t.target,
+            pace = t.pace,
+            goal = t.goal,
+            activityLevel = t.activityLevel,
+            userId = t.userId
         )
     }
 }

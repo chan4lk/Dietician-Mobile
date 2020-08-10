@@ -7,8 +7,8 @@ import com.dietician.remote.api.AuthApi
 import com.dietician.remote.api.PlanApi
 import com.dietician.remote.api.ProfileApi
 import com.dietician.remote.mapper.Mapper
-import com.dietician.remote.mapper.ResponseMapper
 import com.dietician.remote.model.Credential
+import com.dietician.remote.model.PlanWrapper
 import com.dietician.remote.model.Profile
 import com.dietician.remote.model.User
 import io.reactivex.Observable
@@ -19,7 +19,7 @@ class RemoteDataSourceImpl @Inject constructor(
     private val authApi: AuthApi,
     private val planApi: PlanApi,
     private val profileApi: ProfileApi,
-    private val mapper: ResponseMapper,
+    private val planMapper: Mapper<PlanData, PlanWrapper>,
     private val userMapper: Mapper<UserData, User>,
     private val profileMapper: Mapper<ProfileData, Profile>,
     private val tokenRepository: TokenRepository
@@ -54,7 +54,7 @@ class RemoteDataSourceImpl @Inject constructor(
 
     override fun getPlans(userId: Long): Observable<List<PlanData>> {
         return planApi.getPlans(userId).map { response ->
-            response.map { plan -> mapper.mapToPlan(plan) }
+            response.map { plan -> planMapper.from(plan) }
         }
     }
 
@@ -75,6 +75,10 @@ class RemoteDataSourceImpl @Inject constructor(
             .map { profile ->
                 profileMapper.from(profile)
             }
+    }
+
+    override fun savePlan(planData: PlanData): Observable<Long> {
+        return planApi.savePlan(planMapper.to(planData))
     }
 
 }

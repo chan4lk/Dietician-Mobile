@@ -17,4 +17,6 @@ interface DietRepository {
     fun saveProfile(profile: ProfileEntity): Observable<Long>
 
     fun getProfile(userId: Long): Observable<ProfileEntity>
+
+    fun savePlan(plan: PlanEntity): Observable<Long>
 }

@@ -32,6 +32,9 @@ class LocalDataSourceImpl @Inject constructor(
 
     override fun saveUser(user: UserTokenData): Completable {
         return userDAO.addUser(userMapper.to(user, user.id))
+//        return userDAO.clearCachedUsers().doOnComplete {
+//            userDAO.addUser(userMapper.to(user, user.id))
+//        }
     }
 
     override fun getActiveUser(): Observable<UserTokenData> {

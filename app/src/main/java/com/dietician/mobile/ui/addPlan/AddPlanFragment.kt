@@ -8,18 +8,26 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
+import com.dietician.mobile.utils.formatToServerDateDefaults
+import com.dietician.presentation.model.Plan
+import com.dietician.presentation.model.Status
+import com.dietician.presentation.viewmodels.AddPlanViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.slider.Slider
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 
@@ -54,8 +62,10 @@ class AddPlanFragment : Fragment() {
         val targetTextWrapper: TextInputLayout = root.findViewById(R.id.target_weight_text_wrapper)
         val paceTextWrapper: TextInputLayout = root.findViewById(R.id.pace_textInputLayout)
         val targetText: TextInputEditText = root.findViewById(R.id.target_weight)
+        val nameText: TextInputEditText = root.findViewById(R.id.plan_name_text)
         val slider: Slider = root.findViewById(R.id.duration_slider)
         val saveButton: MaterialButton = root.findViewById(R.id.plan_save_btn)
+        val loader: ProgressBar = root.findViewById(R.id.loading)
 
         activity?.resources?.let { res ->
 
@@ -122,8 +132,45 @@ class AddPlanFragment : Fragment() {
 
 
         saveButton.setOnClickListener {
-
+            addPlanViewModel.save(
+                Plan(
+                    id = 0,
+                    userId = 0,
+                    activityLevel = activityLevelDropdown.listSelection,
+                    goal = when (goalSwitch.isEnabled) {
+                        true -> 1
+                        else -> 0
+                    },
+                    pace = when (paceLevelDropdown.listSelection == -1) {
+                        true -> 0
+                        else -> paceLevelDropdown.listSelection
+                    },
+                    name = nameText.text.toString(),
+                    duration = slider.value.toLong(),
+                    startDate = Date().formatToServerDateDefaults(),
+                    status = 0,
+                    target = when (targetText.text.toString() != "") {
+                        true -> targetText.text.toString().toLong()
+                        else -> 0
+                    }
+                )
+            )
         }
+
+        addPlanViewModel.source.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.LOADING -> {
+                    loader.isVisible = true
+                }
+                Status.ERROR -> {
+                    loader.isVisible = false
+                }
+                Status.SUCCESS -> {
+                    loader.isVisible = false
+                    findNavController().navigate(R.id.nav_plan)
+                }
+            }
+        })
 
 
         return root

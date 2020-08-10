@@ -1,5 +1,6 @@
 package com.dietician.mobile.di
 
+import com.dietician.data.model.PlanData
 import com.dietician.data.model.ProfileData
 import com.dietician.data.model.UserData
 import com.dietician.data.repository.RemoteDataSource
@@ -12,6 +13,7 @@ import com.dietician.remote.mapper.Mapper
 import com.dietician.remote.mapper.ProfileMapper
 import com.dietician.remote.mapper.ResponseMapper
 import com.dietician.remote.mapper.UserMapper
+import com.dietician.remote.model.PlanWrapper
 import com.dietician.remote.model.Profile
 import com.dietician.remote.model.User
 import com.dietician.remote.source.RemoteDataSourceImpl
@@ -37,8 +39,7 @@ class RemoteModule {
     }
 
     @Provides
-    fun provideMapper(): ResponseMapper =
-        ResponseMapper()
+    fun providePlanMapper(): Mapper<PlanData, PlanWrapper> = ResponseMapper()
 
     @Provides
     fun provideUserMapper(): Mapper<UserData, User> = UserMapper()

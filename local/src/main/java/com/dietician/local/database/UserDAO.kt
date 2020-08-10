@@ -10,7 +10,7 @@ interface UserDAO {
     @Query("SELECT * FROM user WHERE user_name = :userName")
     fun getUser(userName: String): Observable<UserLocal>
 
-    @Query("SELECT * FROM user ORDER BY TOKEN DESC LIMIT 1")
+    @Query("SELECT * FROM user LIMIT 1")
     fun getActiveUser(): Observable<UserLocal>
 
     @Update(onConflict = OnConflictStrategy.IGNORE)

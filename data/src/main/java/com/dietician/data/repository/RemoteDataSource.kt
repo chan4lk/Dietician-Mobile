@@ -16,4 +16,6 @@ interface RemoteDataSource {
     fun saveProfile(profile: ProfileData): Observable<Long>
 
     fun getProfile(userId: Long): Observable<ProfileData>
+
+    fun savePlan(planData: PlanData): Observable<Long>
 }

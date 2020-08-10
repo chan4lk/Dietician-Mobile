@@ -78,6 +78,20 @@ class DietRepositoryImpl @Inject constructor(
             .concatWith(localData)
     }
 
+    override fun savePlan(plan: PlanEntity): Observable<Long> {
+        return localDataSource.getActiveUser()
+            .flatMap { userData ->
+                savePlanInRemote(plan, userData)
+            }
+    }
+
+    private fun savePlanInRemote(plan: PlanEntity, userData: UserTokenData): Observable<Long> {
+        val t = planDomainDataMapper.to(plan, userData.id)
+        return remoteDataSource.savePlan(t).map {
+            it
+        }
+    }
+
     private fun callRemote(profile: ProfileEntity, userData: UserTokenData): Observable<Long> {
         val profileData = profileMapper.to(profile)
         val userId = userData.id
