@@ -1,12 +1,12 @@
 package com.dietician.remote.mapper
 
 import com.dietician.data.model.PlanData
-import com.dietician.remote.model.PlanWrapper
+import com.dietician.remote.model.Plan
 import javax.inject.Inject
 
-class ResponseMapper @Inject constructor() : Mapper<PlanData, PlanWrapper> {
+class PlanMapper @Inject constructor() : Mapper<PlanData, Plan> {
 
-    override fun from(e: PlanWrapper): PlanData {
+    override fun from(e: Plan): PlanData {
         return PlanData(
             id = e.id,
             name = e.name,
@@ -21,8 +21,8 @@ class ResponseMapper @Inject constructor() : Mapper<PlanData, PlanWrapper> {
         )
     }
 
-    override fun to(t: PlanData): PlanWrapper {
-        return PlanWrapper(
+    override fun to(t: PlanData): Plan {
+        return Plan(
             id = t.id,
             name = t.name,
             duration = t.duration,

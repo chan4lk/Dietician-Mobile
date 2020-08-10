@@ -10,10 +10,10 @@ import com.dietician.remote.api.AuthApi
 import com.dietician.remote.api.PlanApi
 import com.dietician.remote.api.ProfileApi
 import com.dietician.remote.mapper.Mapper
+import com.dietician.remote.mapper.PlanMapper
 import com.dietician.remote.mapper.ProfileMapper
-import com.dietician.remote.mapper.ResponseMapper
 import com.dietician.remote.mapper.UserMapper
-import com.dietician.remote.model.PlanWrapper
+import com.dietician.remote.model.Plan
 import com.dietician.remote.model.Profile
 import com.dietician.remote.model.User
 import com.dietician.remote.source.RemoteDataSourceImpl
@@ -39,7 +39,7 @@ class RemoteModule {
     }
 
     @Provides
-    fun providePlanMapper(): Mapper<PlanData, PlanWrapper> = ResponseMapper()
+    fun providePlanMapper(): Mapper<PlanData, Plan> = PlanMapper()
 
     @Provides
     fun provideUserMapper(): Mapper<UserData, User> = UserMapper()
