@@ -9,11 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
 import com.dietician.mobile.databinding.FragmentDietBinding
 import com.dietician.presentation.model.Food
+import timber.log.Timber
 import javax.inject.Inject
 
 class FoodFragment : Fragment() {
@@ -47,8 +49,15 @@ class FoodFragment : Fragment() {
             .inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    val args: FoodFragmentArgs by navArgs()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val planId = args.planId
+        Timber.d("planId %s", planId)
         val binding: FragmentDietBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_diet, container, false)
         val adapter = FoodAdapter(FoodListener {
