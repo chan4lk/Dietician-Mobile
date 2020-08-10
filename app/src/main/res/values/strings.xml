@@ -76,7 +76,8 @@
     <string name="activity_level_2">Activity Level 2</string>
     <string name="activity_level_3">Activity Level 3</string>
 
-    <string name="goal_hint">Change Weight</string>
+    <string name="goal_hint_maintain">Maintain Weight</string>
+    <string name="goal_hint_change">Change Weight</string>
     <string-array name="activity_levels">
         <item>@string/activity_level_1</item>
         <item>@string/activity_level_2</item>
