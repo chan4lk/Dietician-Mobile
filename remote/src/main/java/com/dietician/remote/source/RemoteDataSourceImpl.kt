@@ -2,6 +2,7 @@ package com.dietician.remote.source
 
 import com.dietician.data.model.*
 import com.dietician.data.repository.RemoteDataSource
+import com.dietician.domain.repository.TokenRepository
 import com.dietician.remote.api.AuthApi
 import com.dietician.remote.api.PlanApi
 import com.dietician.remote.api.ProfileApi
@@ -20,7 +21,8 @@ class RemoteDataSourceImpl @Inject constructor(
     private val profileApi: ProfileApi,
     private val mapper: ResponseMapper,
     private val userMapper: Mapper<UserData, User>,
-    private val profileMapper: Mapper<ProfileData, Profile>
+    private val profileMapper: Mapper<ProfileData, Profile>,
+    private val tokenRepository: TokenRepository
 ) : RemoteDataSource {
     override fun login(userName: String, password: String): Observable<UserTokenData> {
         val credential = Credential(userName, password)
@@ -33,6 +35,10 @@ class RemoteDataSourceImpl @Inject constructor(
         password: String,
         response: TokenData
     ): ObservableSource<out UserTokenData>? {
+
+        // Set token for next api call.
+        tokenRepository.setTokenValue(response.token)
+
         return authApi.getUserDetails(userName)
             .map { user ->
                 UserTokenData(
@@ -40,14 +46,14 @@ class RemoteDataSourceImpl @Inject constructor(
                     token = response.token,
                     password = password,
                     email = user.email,
-                    lastName = user.lastName,
-                    firstName = user.firstName
+                    lastName = user.surname,
+                    firstName = user.name
                 )
             }
     }
 
-    override fun getPlans(email: String): Observable<List<PlanData>> {
-        return planApi.getPlans(email).map { response ->
+    override fun getPlans(userId: Long): Observable<List<PlanData>> {
+        return planApi.getPlans(userId).map { response ->
             response.map { plan -> mapper.mapToPlan(plan) }
         }
     }

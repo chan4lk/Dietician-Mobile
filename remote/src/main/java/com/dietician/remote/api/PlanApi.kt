@@ -6,8 +6,8 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PlanApi {
-    @GET("Plans/User/{email}")
-    fun getPlans(@Path("email") email: String): Observable<List<PlanWrapper>>
+    @GET("Plans/User/{id}")
+    fun getPlans(@Path("id") id: Long): Observable<List<PlanWrapper>>
 }
 
 

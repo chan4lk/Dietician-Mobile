@@ -34,15 +34,15 @@ class DietRepositoryImpl @Inject constructor(
             .concatWith(tokenObservable)
     }
 
-    override fun getPlans(userName: String): Observable<List<PlanEntity>> {
-        val localPlans = localDataSource.getPlans(userName)
+    override fun getPlans(userId: Long): Observable<List<PlanEntity>> {
+        val localPlans = localDataSource.getPlans(userId)
             .map { plans ->
                 plans.map { planDomainDataMapper.from(it) }
             }
 
-        return remoteDataSource.getPlans(userName)
+        return remoteDataSource.getPlans(userId)
             .map { plans ->
-                localDataSource.savePlans(userName, plans)
+                localDataSource.savePlans(userId, plans)
                 plans.map { planDomainDataMapper.from(it) }
             }.onErrorResumeNext(Observable.empty())
             .concatWith(localPlans)
@@ -67,7 +67,6 @@ class DietRepositoryImpl @Inject constructor(
 
     private fun callRemote(profile: ProfileEntity, userData: UserTokenData): Observable<Long> {
         val profileData = profileMapper.to(profile)
-        val userName = userData.email
         val userId = userData.id
         profileData.userId = userId
 
@@ -83,7 +82,7 @@ class DietRepositoryImpl @Inject constructor(
                     age = profile.age,
                     userId = userId
                 )
-                localDataSource.saveProfile(userName, profileWithId).subscribe()
+                localDataSource.saveProfile(userId, profileWithId).subscribe()
                 it
             }
     }

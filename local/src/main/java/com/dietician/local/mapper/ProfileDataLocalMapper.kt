@@ -18,7 +18,7 @@ class ProfileDataLocalMapper @Inject constructor() : Mapper<ProfileData, Profile
         )
     }
 
-    override fun to(t: ProfileData, userName: String): ProfileLocal {
+    override fun to(t: ProfileData, userId: Long): ProfileLocal {
         return ProfileLocal(
             id = t.id,
             age = t.age,
@@ -27,7 +27,6 @@ class ProfileDataLocalMapper @Inject constructor() : Mapper<ProfileData, Profile
             gender = t.gender,
             isPregnant = t.isPregnant,
             isVegetarian = t.isVegetarian,
-            userName = userName,
             userId = t.userId
         )
     }

@@ -4,6 +4,6 @@ interface Mapper<T, E> {
 
     fun from(e: E): T
 
-    fun to(t: T, userName: String): E
+    fun to(t: T, userId: Long): E
 
 }

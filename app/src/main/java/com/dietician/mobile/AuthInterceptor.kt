@@ -13,9 +13,9 @@ class AuthInterceptor @Inject constructor(
         val requestBuilder = chain.request().newBuilder()
 
         // If token has been saved, add it to the request
-        val token = tokenRepository.getToken()
+        val token = tokenRepository.getTokenValue()
 
-        requestBuilder.addHeader("Authorization", "Bearer ${token.token}")
+        requestBuilder.addHeader("Authorization", "Bearer $token")
         return chain.proceed(requestBuilder.build())
     }
 }

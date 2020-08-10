@@ -19,9 +19,11 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 @Module(includes = [RemoteModule.Binders::class])
 class RemoteModule {
@@ -58,15 +60,20 @@ class RemoteModule {
         retrofit.create(ProfileApi::class.java)
 
     @Provides
-    fun provideRetrofit(interceptor: AuthInterceptor): Retrofit =
-        Retrofit.Builder()
+    fun provideRetrofit(interceptor: AuthInterceptor): Retrofit {
+        val logger = HttpLoggingInterceptor()
+        logger.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(interceptor)
+                    .addInterceptor(logger)
                     .build()
             )
             .baseUrl(BuildConfig.BASE_URL)
             .build()
+    }
+
 }

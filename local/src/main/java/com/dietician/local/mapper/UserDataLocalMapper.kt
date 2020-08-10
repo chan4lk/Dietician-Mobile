@@ -16,7 +16,7 @@ class UserDataLocalMapper @Inject constructor() : Mapper<UserTokenData, UserLoca
         )
     }
 
-    override fun to(t: UserTokenData, userName: String): UserLocal {
+    override fun to(t: UserTokenData, userId: Long): UserLocal {
         return UserLocal(
             id = t.id,
             userName = t.email,

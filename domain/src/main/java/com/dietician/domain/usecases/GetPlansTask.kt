@@ -13,11 +13,11 @@ class GetPlansTask @Inject constructor(
     private val dietRepository: DietRepository,
     @Background backgroundScheduler: Scheduler,
     @Foreground foregroundScheduler: Scheduler
-) : ObservableUseCase<List<PlanEntity>, String>(
+) : ObservableUseCase<List<PlanEntity>, Long>(
     backgroundScheduler,
     foregroundScheduler
 ) {
-    override fun generateObservable(input: String?): Observable<List<PlanEntity>> {
+    override fun generateObservable(input: Long?): Observable<List<PlanEntity>> {
         if (input == null) {
             throw IllegalArgumentException("Token cannot be null")
         }

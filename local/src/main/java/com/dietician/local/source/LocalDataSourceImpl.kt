@@ -31,7 +31,7 @@ class LocalDataSourceImpl @Inject constructor(
     }
 
     override fun saveUser(user: UserTokenData): Completable {
-        return userDAO.addUser(userMapper.to(user, userName = user.email))
+        return userDAO.addUser(userMapper.to(user, user.id))
     }
 
     override fun getActiveUser(): Observable<UserTokenData> {
@@ -41,21 +41,21 @@ class LocalDataSourceImpl @Inject constructor(
             }
     }
 
-    override fun getPlans(userName: String): Observable<List<PlanData>> {
-        return planDAO.getUserPlans(userName)
+    override fun getPlans(userId: Long): Observable<List<PlanData>> {
+        return planDAO.getUserPlans(userId)
             .map { plans ->
                 plans.map { planMapper.from(it) }
             }
     }
 
-    override fun savePlans(userName: String, plans: List<PlanData>) {
+    override fun savePlans(userId: Long, plans: List<PlanData>) {
         return planDAO.addPlans(
-            plans = plans.map { planMapper.to(it, userName) }
+            plans = plans.map { planMapper.to(it, userId) }
         )
     }
 
-    override fun saveProfile(userName: String, profile: ProfileData): Completable {
-        return profileDAO.addProfile(profileMapper.to(profile, userName))
+    override fun saveProfile(userId: Long, profile: ProfileData): Completable {
+        return profileDAO.addProfile(profileMapper.to(profile, userId))
     }
 }
 

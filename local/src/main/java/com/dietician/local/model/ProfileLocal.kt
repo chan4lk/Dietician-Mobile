@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 data class ProfileLocal(
     @PrimaryKey @ColumnInfo(name = "profile_id") val id: Long,
     @ColumnInfo(name = "user_id") val userId: Long,
-    @ColumnInfo(name = "user_name") val userName: String,
     @ColumnInfo(name = "age") val age: Int,
     @ColumnInfo(name = "height") val height: Double,
     @ColumnInfo(name = "weight") val weight: Double,

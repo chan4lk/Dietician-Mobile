@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "plans")
 data class PlanLocal(
     @PrimaryKey @ColumnInfo(name = "plan_id") val id: Number,
-    @ColumnInfo(name = "user_name") val userName: String,
+    @ColumnInfo(name = "user_id") val userId: Number,
     @ColumnInfo(name = "target") val target: Number,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "duration") val duration: Number,

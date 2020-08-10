@@ -9,7 +9,7 @@ import io.reactivex.Observable
 interface RemoteDataSource {
     fun login(userName: String, password: String): Observable<UserTokenData>
 
-    fun getPlans(userName: String): Observable<List<PlanData>>
+    fun getPlans(userId: Long): Observable<List<PlanData>>
 
     fun signUp(user: UserData): Observable<Long>
 

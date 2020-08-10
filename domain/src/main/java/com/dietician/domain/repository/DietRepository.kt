@@ -10,7 +10,7 @@ interface DietRepository {
 
     fun login(userName: String, password: String): Observable<UserTokenEntity>
 
-    fun getPlans(userName: String): Observable<List<PlanEntity>>
+    fun getPlans(userId: Long): Observable<List<PlanEntity>>
 
     fun signUp(user: UserEntity): Observable<UserTokenEntity>
 

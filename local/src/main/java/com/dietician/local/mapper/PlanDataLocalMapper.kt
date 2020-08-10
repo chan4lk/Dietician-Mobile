@@ -16,10 +16,10 @@ class PlanDataLocalMapper @Inject constructor() : Mapper<PlanData, PlanLocal> {
         )
     }
 
-    override fun to(t: PlanData, userName: String): PlanLocal {
+    override fun to(t: PlanData, userId: Long): PlanLocal {
         return PlanLocal(
             id = t.id,
-            userName = userName,
+            userId = userId,
             name = t.name,
             duration = t.duration,
             startDate = t.startDate,

@@ -10,8 +10,8 @@ interface PlanDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addPlans(plans: List<PlanLocal>)
 
-    @Query("SELECT * FROM plans WHERE user_name = :userName")
-    fun getUserPlans(userName: String): Observable<List<PlanLocal>>
+    @Query("SELECT * FROM plans WHERE user_id = :userId")
+    fun getUserPlans(userId: Long): Observable<List<PlanLocal>>
 
     @Query("SELECT * FROM plans")
     fun getActiveUserPlans(): Observable<List<PlanLocal>>

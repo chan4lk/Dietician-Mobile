@@ -10,7 +10,7 @@ interface LocalDataSource {
     fun login(userName: String, password: String): Observable<UserTokenData>
     fun saveUser(user: UserTokenData): Completable
     fun getActiveUser(): Observable<UserTokenData>
-    fun getPlans(userName: String): Observable<List<PlanData>>
-    fun savePlans(userName: String, plans: List<PlanData>)
-    fun saveProfile(userName: String, profile: ProfileData): Completable
+    fun getPlans(userId: Long): Observable<List<PlanData>>
+    fun savePlans(userId: Long, plans: List<PlanData>)
+    fun saveProfile(userId: Long, profile: ProfileData): Completable
 }

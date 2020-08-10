@@ -7,8 +7,8 @@ import io.reactivex.Observable
 
 @Dao
 interface ProfileDAO {
-    @Query("SELECT * FROM profile WHERE profile_id = :id")
-    fun getProfile(id: Long): Observable<ProfileLocal>
+    @Query("SELECT * FROM profile WHERE user_id = :userId")
+    fun getProfile(userId: Long): Observable<ProfileLocal>
 
     @Query("SELECT * FROM profile LIMIT 1")
     fun getActiveProfile(): Observable<ProfileLocal>
