@@ -65,6 +65,19 @@ class DietRepositoryImpl @Inject constructor(
             }
     }
 
+    override fun getProfile(userId: Long): Observable<ProfileEntity> {
+        val localData = localDataSource.getProfile(userId)
+            .map { profile ->
+                profileMapper.from(profile)
+            }
+        return remoteDataSource.getProfile(userId)
+            .map { profile ->
+                localDataSource.saveProfile(userId, profile)
+                profileMapper.from(profile)
+            }.onErrorResumeNext(Observable.empty())
+            .concatWith(localData)
+    }
+
     private fun callRemote(profile: ProfileEntity, userData: UserTokenData): Observable<Long> {
         val profileData = profileMapper.to(profile)
         val userId = userData.id

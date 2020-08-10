@@ -66,4 +66,11 @@ class RemoteDataSourceImpl @Inject constructor(
         return profileApi.saveProfile(profileMapper.to(profile))
     }
 
+    override fun getProfile(userId: Long): Observable<ProfileData> {
+        return profileApi.getProfile(userId)
+            .map { profile ->
+                profileMapper.from(profile)
+            }
+    }
+
 }

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.toLiveData
+import com.dietician.domain.repository.TokenRepository
+import com.dietician.domain.usecases.GetProfileTask
 import com.dietician.domain.usecases.SaveProfileTask
 import com.dietician.presentation.mapper.ProfileEntityMapper
 import com.dietician.presentation.model.Profile
@@ -17,20 +19,26 @@ import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
     private val saveProfileTask: SaveProfileTask,
-    private val profileMapper: ProfileEntityMapper
+    private val getProfileTask: GetProfileTask,
+    private val profileMapper: ProfileEntityMapper,
+    private val tokenRepository: TokenRepository
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
-    private val mediator = MediatorLiveData<Resource<Long>>()
+    private val mediator = MediatorLiveData<Resource<Profile>>()
+    private val mediatorSave = MediatorLiveData<Resource<Profile>>()
 
-    val source: LiveData<Resource<Long>>
+    val source: LiveData<Resource<Profile>>
+        get() = mediatorSave
+
+    val profileSource: LiveData<Resource<Profile>>
         get() = mediator
 
-    fun save(profile: Profile) {
+    init {
         val resource =
-            saveProfileTask
-                .buildUseCase(profileMapper.from(profile))
+            getProfileTask
+                .buildUseCase(tokenRepository.getToken().id)
                 .map {
-                    it
+                    profileMapper.to(it)
                 }
                 .map { Resource.success(it) }
                 .startWith(Resource.loading())
@@ -44,6 +52,29 @@ class ProfileViewModel @Inject constructor(
             mediator.value = it
             if (it.status != Status.LOADING) {
                 mediator.removeSource(resource)
+            }
+        }
+    }
+
+    fun save(profile: Profile) {
+        val resource =
+            saveProfileTask
+                .buildUseCase(profileMapper.from(profile))
+                .map {
+                    profile
+                }
+                .map { Resource.success(it) }
+                .startWith(Resource.loading())
+                .onErrorResumeNext(Function {
+                    Observable.just(Resource.error(it.localizedMessage!!))
+                })
+                .toFlowable(BackpressureStrategy.LATEST)
+                .toLiveData()
+
+        mediatorSave.addSource(resource) {
+            mediatorSave.value = it
+            if (it.status != Status.LOADING) {
+                mediatorSave.removeSource(resource)
             }
         }
 

@@ -57,5 +57,12 @@ class LocalDataSourceImpl @Inject constructor(
     override fun saveProfile(userId: Long, profile: ProfileData): Completable {
         return profileDAO.addProfile(profileMapper.to(profile, userId))
     }
+
+    override fun getProfile(userId: Long): Observable<ProfileData> {
+        return profileDAO.getProfile(userId)
+            .map { profile ->
+                profileMapper.from(profile)
+            }
+    }
 }
 

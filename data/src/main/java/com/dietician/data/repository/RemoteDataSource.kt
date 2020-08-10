@@ -14,4 +14,6 @@ interface RemoteDataSource {
     fun signUp(user: UserData): Observable<Long>
 
     fun saveProfile(profile: ProfileData): Observable<Long>
+
+    fun getProfile(userId: Long): Observable<ProfileData>
 }

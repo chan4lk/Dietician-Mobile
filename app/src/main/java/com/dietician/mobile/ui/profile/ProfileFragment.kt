@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ProgressBar
-import android.widget.RadioGroup
+import android.widget.RadioButton
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -16,6 +16,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
+import com.dietician.presentation.model.Gender
+import com.dietician.presentation.model.Gender.MALE
 import com.dietician.presentation.model.Profile
 import com.dietician.presentation.model.Status
 import com.dietician.presentation.viewmodels.ProfileViewModel
@@ -48,16 +50,17 @@ class ProfileFragment : Fragment() {
         val age: TextInputEditText = root.findViewById(R.id.age_text)
         val weight: TextInputEditText = root.findViewById(R.id.weight_text)
         val height: TextInputEditText = root.findViewById(R.id.height_text)
-        val gender: RadioGroup = root.findViewById(R.id.gender_radio_group)
+        val maleGender: RadioButton = root.findViewById(R.id.male_radio_btn)
+        val femaleGender: RadioButton = root.findViewById(R.id.female_radio_btn)
         val isPregnant: CheckBox = root.findViewById(R.id.isPregnant)
         val isVeg: CheckBox = root.findViewById(R.id.isVeg)
         val saveButton: MaterialButton = root.findViewById(R.id.save_profile_btn)
         val loading: ProgressBar = root.findViewById(R.id.loading)
 
         saveButton.setOnClickListener {
-            val isMale = when (gender.checkedRadioButtonId == R.id.male_radio_btn) {
-                true -> 0
-                false -> 1
+            val isMale = when (maleGender.isChecked) {
+                true -> Gender.MALE.ordinal
+                false -> Gender.FEMALE.ordinal
             }
             viewModel.save(
                 Profile(
@@ -73,6 +76,37 @@ class ProfileFragment : Fragment() {
             )
         }
 
+        viewModel.profileSource.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.LOADING -> {
+                    loading.isVisible = true
+                    saveButton.isEnabled = true
+                }
+                Status.ERROR -> {
+                    loading.isVisible = false
+                    saveButton.isEnabled = true
+                }
+                Status.SUCCESS -> {
+                    loading.isVisible = false
+                    saveButton.isEnabled = true
+
+                    it.data?.let { profile ->
+                        age.setText(profile.age.toString())
+                        weight.setText(profile.weight.toString())
+                        height.setText(profile.height.toString())
+                        isPregnant.isChecked = profile.isPregnant
+                        isVeg.isChecked = profile.isVegetarian
+
+                        when (profile.gender == MALE.ordinal) {
+                            true -> maleGender.isChecked = true
+                            else -> femaleGender.isChecked = true
+                        }
+                    }
+
+                }
+            }
+        })
+
         viewModel.source.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.LOADING -> {
@@ -86,9 +120,7 @@ class ProfileFragment : Fragment() {
                 Status.SUCCESS -> {
                     loading.isVisible = false
                     saveButton.isEnabled = true
-                    if (it.data!! > 0) {
-                        findNavController().navigate(R.id.nav_plan)
-                    }
+                    findNavController().navigate(R.id.nav_plan)
                 }
             }
         })

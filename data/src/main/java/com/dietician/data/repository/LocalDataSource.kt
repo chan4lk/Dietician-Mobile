@@ -13,4 +13,5 @@ interface LocalDataSource {
     fun getPlans(userId: Long): Observable<List<PlanData>>
     fun savePlans(userId: Long, plans: List<PlanData>)
     fun saveProfile(userId: Long, profile: ProfileData): Completable
+    fun getProfile(userId: Long): Observable<ProfileData>
 }
