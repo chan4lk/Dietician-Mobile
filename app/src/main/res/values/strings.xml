@@ -44,8 +44,9 @@
         weight daily to track the progress.
     </string>
     <string name="action_1">Customize</string>
-    <string name="action_2">High Five</string>
+    <string name="action_2">View Plan</string>
     <string name="plan_name">Plan Name</string>
+    <string name="plan_description">Start today and achieve your target in upcoming weeks.</string>
     <string name="diet_product_content">Plan A</string>
     <string name="diet_product_title">Plan A</string>
     <string name="diet_product_description">2 months plan  goaled for 70KG</string>
@@ -95,6 +96,7 @@
     <string name="pace_level_3">Custom Weeks</string>
     <string name="weeks_range">Duration in Weeks</string>
     <string name="hint_pace_level">Pace</string>
+    <string name="weight_goal_hint">weight goal</string>
     <string-array name="pace_levels">
         <item>@string/pace_level_1</item>
         <item>@string/pace_level_2</item>

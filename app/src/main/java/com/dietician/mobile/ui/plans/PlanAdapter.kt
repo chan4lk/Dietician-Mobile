@@ -11,7 +11,7 @@ import java.util.*
 import javax.inject.Inject
 
 class PlanAdapter @Inject
-constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>() {
+constructor() : RecyclerView.Adapter<PlanAdapter.PlanViewHolder>() {
 
     private var planItemList: MutableList<Plan> = ArrayList()
     private var clickListener: ClickListener? = null
@@ -39,8 +39,7 @@ constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: PlanViewHolder, position: Int) {
-        if(itemCount >0)
-        {
+        if (itemCount > 0) {
             val planItem = planItemList[position]
             holder.bind(planItem)
         }
@@ -50,13 +49,16 @@ constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>() {
         fun onPlanItemClick(planItem: Plan)
     }
 
-    inner class PlanViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class PlanViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private lateinit var selectedItem: Plan
         private var itemName: TextView? = null
+        private var plan_goal: TextView? = null
 
         init {
             itemName = itemView.findViewById(R.id.item_name)
+            plan_goal = itemView.findViewById(R.id.plan_goal)
+
             itemView.setOnClickListener {
                 clickListener?.onPlanItemClick(selectedItem)
             }
@@ -65,6 +67,11 @@ constructor(): RecyclerView.Adapter<PlanAdapter.PlanViewHolder>() {
         fun bind(planItem: Plan) {
             selectedItem = planItem
             itemName?.text = planItem.name
+            plan_goal?.text =
+                when (planItem.goal) {
+                    0 -> "Target to change weight"
+                    else -> "Target to maintain weight"
+                }
         }
 
     }

@@ -86,14 +86,12 @@ class PlanFragment @Inject
                 }
                 Status.ERROR -> {
                     loader.isVisible = false
-
                 }
                 Status.SUCCESS -> {
                     loader.isVisible = false
                     it.data?.let { plans ->
                         planAdapter.setPlanItem(plans)
                     }
-
                 }
             }
         })
