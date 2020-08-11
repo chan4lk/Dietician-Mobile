@@ -29,7 +29,7 @@ class FoodAdapter(private val clickListener: FoodListener) :
             val lFood = mutableListOf<Food>()
             val dFood = mutableListOf<Food>()
             val h0 = Header(id = 1, title = "There is no diet menu")
-            val h1 = Header(id = 1, title = "Break First")
+            val h1 = Header(id = 1, title = "Breakfast")
             val h2 = Header(id = 2, title = "Lunch")
             val h3 = Header(id = 3, title = "Dinner")
             val items = when (list) {

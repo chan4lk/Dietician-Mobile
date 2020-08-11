@@ -16,8 +16,8 @@
     <string name="health_profile">Health Profile</string>
     <string name="name">Name</string>
     <string name="age">Age</string>
-    <string name="height">Height</string>
-    <string name="weight">Weight</string>
+    <string name="height">Height(cm)</string>
+    <string name="weight">Weight(kg)</string>
     <string name="gender">Gender</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -74,10 +74,10 @@
     <string name="action_logout">Logout</string>
     <string name="hint_activity_level">Activity Level</string>
     <string name="activity_level_1">Sedentary(little or no exercise)</string>
-    <string name="activity_level_2">Slightly</string>
-    <string name="activity_level_3">Moderately</string>
-    <string name="activity_level_4">Very Active</string>
-    <string name="activity_level_5">Extra Active</string>
+    <string name="activity_level_2">Slightly(light exercise or sports)</string>
+    <string name="activity_level_3">Moderately(moderate exercise or sports)</string>
+    <string name="activity_level_4">Very Active(hard exercise or sports)</string>
+    <string name="activity_level_5">Extra Active(very hard exercise, physical job or sports)</string>
     <string name="activity_level_6">Professional Athlete</string>
 
     <string name="goal_hint_maintain">Maintain Weight</string>

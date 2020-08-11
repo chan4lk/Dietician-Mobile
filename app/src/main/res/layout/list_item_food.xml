@@ -27,23 +27,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/ic_fastfood_24"
+        tools:srcCompat="@drawable/food2"
         app:foodImage="@{food}"
         android:layout_marginLeft="16dp" />
 
     <TextView
         android:id="@+id/name_string"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:textAlignment="center"
+        android:gravity="start"
+        app:foodNameString="@{food}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/food_image"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/food_image"
         app:layout_constraintTop_toBottomOf="@+id/food_image"
-        tools:text="Cofee"
-        app:foodNameString="@{food}"
-        android:gravity="center_horizontal" />
+        tools:text="Cofee" />
 
 
 
