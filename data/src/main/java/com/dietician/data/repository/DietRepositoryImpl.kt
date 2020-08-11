@@ -25,7 +25,7 @@ class DietRepositoryImpl @Inject constructor(
 
         return remoteDataSource.login(userName, password)
             .map {
-                localDataSource.saveUser(it).subscribe()
+                localDataSource.saveUser(it)
                 tokenDomainDataMapper.from(it)
             }
             .concatWith(tokenObservable)
@@ -56,7 +56,6 @@ class DietRepositoryImpl @Inject constructor(
     override fun saveProfile(profile: ProfileEntity): Observable<Long> {
 
         return localDataSource.getActiveUser()
-            .onErrorResumeNext(Observable.empty())
             .flatMap { userData ->
                 callRemote(profile, userData)
             }
@@ -71,7 +70,7 @@ class DietRepositoryImpl @Inject constructor(
             .map { profile ->
                 localDataSource.saveProfile(userId, profile)
                 profileMapper.from(profile)
-            }.onErrorResumeNext(Observable.empty())
+            }
             .concatWith(localData)
     }
 

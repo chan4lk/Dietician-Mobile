@@ -2,7 +2,6 @@ package com.dietician.local.database
 
 import androidx.room.*
 import com.dietician.local.model.UserLocal
-import io.reactivex.Completable
 import io.reactivex.Observable
 
 @Dao
@@ -17,8 +16,15 @@ interface UserDAO {
     fun updateUser(user: UserLocal)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addUser(user: UserLocal): Completable
+    fun addUser(user: UserLocal)
 
     @Query("DELETE FROM user")
-    fun clearCachedUsers(): Completable
+    fun clearCachedUsers()
+
+    @Transaction
+    fun replaceUser(user: UserLocal) {
+        clearCachedUsers()
+        addUser(user)
+    }
+
 }

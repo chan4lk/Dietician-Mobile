@@ -8,7 +8,7 @@ import io.reactivex.Observable
 
 interface LocalDataSource {
     fun login(userName: String, password: String): Observable<UserTokenData>
-    fun saveUser(user: UserTokenData): Completable
+    fun saveUser(user: UserTokenData)
     fun getActiveUser(): Observable<UserTokenData>
     fun getPlans(userId: Long): Observable<List<PlanData>>
     fun savePlans(userId: Long, plans: List<PlanData>)
