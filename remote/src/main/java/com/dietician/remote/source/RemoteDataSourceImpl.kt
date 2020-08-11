@@ -98,6 +98,10 @@ class RemoteDataSourceImpl @Inject constructor(
             }
     }
 
+    override fun saveProgress(progressData: ProgressData): Observable<Long> {
+        return progressApi.saveProgress(progressMapper.to(progressData))
+    }
+
     private fun Date.formatToServerDateDefaults(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return sdf.format(this)
