@@ -19,4 +19,6 @@ interface DietRepository {
     fun savePlan(plan: PlanEntity): Observable<Long>
 
     fun getDiet(params: GetDietTask.Params): Observable<DietEntity>
+
+    fun getProgress(userId: Long): Observable<List<ProgressEntity>>
 }

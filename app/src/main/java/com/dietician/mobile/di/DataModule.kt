@@ -45,6 +45,11 @@ abstract class DataModule {
     ): Mapper<DietEntity, DietData>
 
     @Binds
+    abstract fun bindsProgressMapper(
+        progressDomainDataMapper: ProgressDomainDataMapper
+    ): Mapper<ProgressEntity, ProgressData>
+
+    @Binds
     @Singleton
     abstract fun bindTokenRepository(
         repository: TokenRepositoryImpl

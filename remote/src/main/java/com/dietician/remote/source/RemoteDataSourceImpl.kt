@@ -3,10 +3,7 @@ package com.dietician.remote.source
 import com.dietician.data.model.*
 import com.dietician.data.repository.RemoteDataSource
 import com.dietician.domain.repository.TokenRepository
-import com.dietician.remote.api.AuthApi
-import com.dietician.remote.api.DietApi
-import com.dietician.remote.api.PlanApi
-import com.dietician.remote.api.ProfileApi
+import com.dietician.remote.api.*
 import com.dietician.remote.mapper.Mapper
 import com.dietician.remote.model.*
 import io.reactivex.Observable
@@ -20,10 +17,12 @@ class RemoteDataSourceImpl @Inject constructor(
     private val planApi: PlanApi,
     private val profileApi: ProfileApi,
     private val dietApi: DietApi,
+    private val progressApi: ProgressApi,
     private val planMapper: Mapper<PlanData, Plan>,
     private val userMapper: Mapper<UserData, User>,
     private val profileMapper: Mapper<ProfileData, Profile>,
     private val dietMapper: Mapper<DietData, Diet>,
+    private val progressMapper: Mapper<ProgressData, Progress>,
     private val tokenRepository: TokenRepository
 ) : RemoteDataSource {
     override fun login(userName: String, password: String): Observable<UserTokenData> {
@@ -87,6 +86,15 @@ class RemoteDataSourceImpl @Inject constructor(
         return dietApi.getDiet(userId, planId, Date().formatToServerDateDefaults(), 1)
             .map { diet ->
                 dietMapper.from(diet)
+            }
+    }
+
+    override fun getProgress(userId: Long): Observable<List<ProgressData>> {
+        return progressApi.getProgress(userId)
+            .map {
+                it.list.map { progress ->
+                    progressMapper.from(progress)
+                }
             }
     }
 

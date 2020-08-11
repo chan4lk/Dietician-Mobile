@@ -1,14 +1,8 @@
 package com.dietician.mobile.di
 
-import com.dietician.domain.entities.DietEntity
-import com.dietician.domain.entities.PlanEntity
-import com.dietician.domain.entities.ProfileEntity
-import com.dietician.domain.entities.UserTokenEntity
+import com.dietician.domain.entities.*
 import com.dietician.presentation.mapper.*
-import com.dietician.presentation.model.Diet
-import com.dietician.presentation.model.Plan
-import com.dietician.presentation.model.Profile
-import com.dietician.presentation.model.Token
+import com.dietician.presentation.model.*
 import dagger.Binds
 import dagger.Module
 
@@ -34,5 +28,10 @@ abstract class PresentationModule {
     abstract fun bindDietMapper(
         dietEntityMapper: DietEntityMapper
     ): Mapper<DietEntity, Diet>
+
+    @Binds
+    abstract fun bindProgressMapper(
+        progressEntityMapper: ProgressEntityMapper
+    ): Mapper<ProgressEntity, Progress>
 
 }

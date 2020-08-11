@@ -1,21 +1,12 @@
 package com.dietician.mobile.di
 
-import com.dietician.data.model.DietData
-import com.dietician.data.model.PlanData
-import com.dietician.data.model.ProfileData
-import com.dietician.data.model.UserData
+import com.dietician.data.model.*
 import com.dietician.data.repository.RemoteDataSource
 import com.dietician.mobile.AuthInterceptor
 import com.dietician.mobile.BuildConfig
-import com.dietician.remote.api.AuthApi
-import com.dietician.remote.api.DietApi
-import com.dietician.remote.api.PlanApi
-import com.dietician.remote.api.ProfileApi
+import com.dietician.remote.api.*
 import com.dietician.remote.mapper.*
-import com.dietician.remote.model.Diet
-import com.dietician.remote.model.Plan
-import com.dietician.remote.model.Profile
-import com.dietician.remote.model.User
+import com.dietician.remote.model.*
 import com.dietician.remote.source.RemoteDataSourceImpl
 import dagger.Binds
 import dagger.Module
@@ -52,6 +43,9 @@ class RemoteModule {
     fun provideDietMapper(): Mapper<DietData, Diet> = DietMapper()
 
     @Provides
+    fun provideProgressMapper(): Mapper<ProgressData, Progress> = ProgressMapper()
+
+    @Provides
     fun provideAuthApi(retrofit: Retrofit): AuthApi =
         retrofit.create(AuthApi::class.java)
 
@@ -66,6 +60,10 @@ class RemoteModule {
     @Provides
     fun provideDietApi(retrofit: Retrofit): DietApi =
         retrofit.create(DietApi::class.java)
+
+    @Provides
+    fun provideProgressApi(retrofit: Retrofit): ProgressApi =
+        retrofit.create(ProgressApi::class.java)
 
     @Provides
     fun provideRetrofit(interceptor: AuthInterceptor): Retrofit {

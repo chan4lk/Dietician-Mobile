@@ -4,35 +4,35 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.toLiveData
-import com.dietician.domain.entities.UserTokenEntity
+import com.dietician.domain.entities.ProgressEntity
 import com.dietician.domain.repository.TokenRepository
-import com.dietician.domain.usecases.LoginTask
+import com.dietician.domain.usecases.GetProgressTask
 import com.dietician.presentation.mapper.Mapper
+import com.dietician.presentation.model.Progress
 import com.dietician.presentation.model.Resource
 import com.dietician.presentation.model.Status
-import com.dietician.presentation.model.Token
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Observable
 import io.reactivex.functions.Function
 import javax.inject.Inject
 
-class LoginViewModel @Inject constructor(
-    private val loginTask: LoginTask,
-    private val tokenMapper: Mapper<UserTokenEntity, Token>,
-    private val tokenRepository: TokenRepository
+class ProgressViewModel @Inject constructor(
+    getProgressTask: GetProgressTask,
+    private val mapper: Mapper<ProgressEntity, Progress>,
+    tokenRepository: TokenRepository
 ) : ViewModel() {
-    private val mediator = MediatorLiveData<Resource<Token>>()
+    private val mediator = MediatorLiveData<Resource<List<Progress>>>()
 
-    val source: LiveData<Resource<Token>>
+    val source: LiveData<Resource<List<Progress>>>
         get() = mediator
 
-    fun login(userName: String, password: String) {
-        val params = LoginTask.Params(userName, password)
+    init {
         val resource =
-            loginTask.buildUseCase(params)
+            getProgressTask.buildUseCase(tokenRepository.getToken().id)
                 .map {
-                    tokenRepository.setToken(it)
-                    tokenMapper.to(it)
+                    it.map { progress ->
+                        mapper.to(progress)
+                    }
                 }
                 .map { Resource.success(it) }
                 .startWith(Resource.loading())

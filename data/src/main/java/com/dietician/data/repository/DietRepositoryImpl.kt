@@ -14,6 +14,7 @@ class DietRepositoryImpl @Inject constructor(
     private val userDomainDataMapper: Mapper<UserEntity, UserData>,
     private val profileMapper: Mapper<ProfileEntity, ProfileData>,
     private val dietMapper: Mapper<DietEntity, DietData>,
+    private val progressMapper: Mapper<ProgressEntity, ProgressData>,
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) : DietRepository {
@@ -85,6 +86,15 @@ class DietRepositoryImpl @Inject constructor(
         return remoteDataSource.getDiet(params.planId, params.userId)
             .map { diet ->
                 dietMapper.from(diet)
+            }
+    }
+
+    override fun getProgress(userId: Long): Observable<List<ProgressEntity>> {
+        return remoteDataSource.getProgress(userId)
+            .map {
+                it.map { progress ->
+                    progressMapper.from(progress)
+                }
             }
     }
 
