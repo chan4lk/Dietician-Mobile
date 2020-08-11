@@ -1,6 +1,13 @@
 package com.dietician.domain.entities
 
 data class FoodItemEntity(
-    val id: Number,
-    val name: String
+    val id: Long,
+    val name: String,
+    val fat: Double,
+    val protine: Double,
+    val carbohydrate: Double,
+    val isVeg: Boolean,
+    val type: Int,
+    val foodCategory: Int,
+    val foodQuantity: Double
 )

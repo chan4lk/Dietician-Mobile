@@ -1,15 +1,10 @@
 package com.dietician.data.repository
 
 import com.dietician.data.mapper.Mapper
-import com.dietician.data.model.PlanData
-import com.dietician.data.model.ProfileData
-import com.dietician.data.model.UserData
-import com.dietician.data.model.UserTokenData
-import com.dietician.domain.entities.PlanEntity
-import com.dietician.domain.entities.ProfileEntity
-import com.dietician.domain.entities.UserEntity
-import com.dietician.domain.entities.UserTokenEntity
+import com.dietician.data.model.*
+import com.dietician.domain.entities.*
 import com.dietician.domain.repository.DietRepository
+import com.dietician.domain.usecases.GetDietTask
 import io.reactivex.Observable
 import javax.inject.Inject
 
@@ -18,6 +13,7 @@ class DietRepositoryImpl @Inject constructor(
     private val planDomainDataMapper: Mapper<PlanEntity, PlanData>,
     private val userDomainDataMapper: Mapper<UserEntity, UserData>,
     private val profileMapper: Mapper<ProfileEntity, ProfileData>,
+    private val dietMapper: Mapper<DietEntity, DietData>,
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) : DietRepository {
@@ -82,6 +78,13 @@ class DietRepositoryImpl @Inject constructor(
         return localDataSource.getActiveUser()
             .flatMap { userData ->
                 savePlanInRemote(plan, userData)
+            }
+    }
+
+    override fun getDiet(params: GetDietTask.Params): Observable<DietEntity> {
+        return remoteDataSource.getDiet(params.planId, params.userId)
+            .map { diet ->
+                dietMapper.from(diet)
             }
     }
 

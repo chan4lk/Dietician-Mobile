@@ -17,12 +17,7 @@ fun TextView.setFoodNameString(item: Food?) {
 @BindingAdapter("foodImage")
 fun ImageView.setSleepImage(item: Food?) {
     item?.let {
-        setImageResource(when (item.name) {
-            "F1" -> R.drawable.ic_fastfood_24
-            "F2" -> R.drawable.ic_fastfood_24
-            "F3" -> R.drawable.ic_fastfood_24
-            else -> R.drawable.ic_fastfood_24
-        })
+        setImageResource(R.drawable.ic_fastfood_24)
     }
 }
 

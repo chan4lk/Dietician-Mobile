@@ -1,9 +1,6 @@
 package com.dietician.data.repository
 
-import com.dietician.data.model.PlanData
-import com.dietician.data.model.ProfileData
-import com.dietician.data.model.UserData
-import com.dietician.data.model.UserTokenData
+import com.dietician.data.model.*
 import io.reactivex.Observable
 
 interface RemoteDataSource {
@@ -18,4 +15,6 @@ interface RemoteDataSource {
     fun getProfile(userId: Long): Observable<ProfileData>
 
     fun savePlan(planData: PlanData): Observable<Long>
+
+    fun getDiet(planId: Long, userId: Long): Observable<DietData>
 }

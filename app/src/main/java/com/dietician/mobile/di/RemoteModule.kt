@@ -1,5 +1,6 @@
 package com.dietician.mobile.di
 
+import com.dietician.data.model.DietData
 import com.dietician.data.model.PlanData
 import com.dietician.data.model.ProfileData
 import com.dietician.data.model.UserData
@@ -7,12 +8,11 @@ import com.dietician.data.repository.RemoteDataSource
 import com.dietician.mobile.AuthInterceptor
 import com.dietician.mobile.BuildConfig
 import com.dietician.remote.api.AuthApi
+import com.dietician.remote.api.DietApi
 import com.dietician.remote.api.PlanApi
 import com.dietician.remote.api.ProfileApi
-import com.dietician.remote.mapper.Mapper
-import com.dietician.remote.mapper.PlanMapper
-import com.dietician.remote.mapper.ProfileMapper
-import com.dietician.remote.mapper.UserMapper
+import com.dietician.remote.mapper.*
+import com.dietician.remote.model.Diet
 import com.dietician.remote.model.Plan
 import com.dietician.remote.model.Profile
 import com.dietician.remote.model.User
@@ -49,6 +49,9 @@ class RemoteModule {
     fun provideProfileMapper(): Mapper<ProfileData, Profile> = ProfileMapper()
 
     @Provides
+    fun provideDietMapper(): Mapper<DietData, Diet> = DietMapper()
+
+    @Provides
     fun provideAuthApi(retrofit: Retrofit): AuthApi =
         retrofit.create(AuthApi::class.java)
 
@@ -59,6 +62,10 @@ class RemoteModule {
     @Provides
     fun provideProfileApi(retrofit: Retrofit): ProfileApi =
         retrofit.create(ProfileApi::class.java)
+
+    @Provides
+    fun provideDietApi(retrofit: Retrofit): DietApi =
+        retrofit.create(DietApi::class.java)
 
     @Provides
     fun provideRetrofit(interceptor: AuthInterceptor): Retrofit {

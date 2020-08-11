@@ -1,6 +1,6 @@
-package com.dietician.presentation.model
+package com.dietician.data.model
 
-data class Food (
+data class FoodData(
     val id: Long,
     val name: String,
     val fat: Double,
@@ -10,5 +10,4 @@ data class Food (
     val type: Int,
     val foodCategory: Int,
     val foodQuantity: Double
-
 )

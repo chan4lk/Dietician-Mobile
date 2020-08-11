@@ -97,6 +97,7 @@
     <string name="weeks_range">Duration in Weeks</string>
     <string name="hint_pace_level">Pace</string>
     <string name="weight_goal_hint">weight goal</string>
+    <string name="progress_screen_hint">Enter Your Weight</string>
     <string-array name="pace_levels">
         <item>@string/pace_level_1</item>
         <item>@string/pace_level_2</item>
