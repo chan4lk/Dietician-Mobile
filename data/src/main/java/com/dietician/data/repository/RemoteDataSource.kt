@@ -19,4 +19,6 @@ interface RemoteDataSource {
     fun getDiet(planId: Long, userId: Long): Observable<DietData>
 
     fun getProgress(userId: Long): Observable<List<ProgressData>>
+
+    fun saveProgress(progressData: ProgressData): Observable<Long>
 }

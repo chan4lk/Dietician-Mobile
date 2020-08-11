@@ -21,4 +21,6 @@ interface DietRepository {
     fun getDiet(params: GetDietTask.Params): Observable<DietEntity>
 
     fun getProgress(userId: Long): Observable<List<ProgressEntity>>
+
+    fun saveProgress(progressEntity: ProgressEntity): Observable<Long>
 }

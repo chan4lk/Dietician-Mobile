@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.dietician.mobile.DieticianApplication
 import com.dietician.mobile.R
+import com.dietician.mobile.utils.formatToServerDateDefaults
 import com.dietician.presentation.model.Progress
 import com.dietician.presentation.model.Status
 import com.dietician.presentation.viewmodels.ProgressViewModel
@@ -22,6 +23,8 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -54,7 +57,16 @@ class ProgressFragment : Fragment(){
 
         val root = inflater.inflate(R.layout.fragment_progress, container, false)
         val loading: ProgressBar = root.findViewById(R.id.loading)
+        val weightText: TextInputEditText = root.findViewById(R.id.weight_text)
+        val button: MaterialButton = root.findViewById(R.id.update_btn)
         chart = root.findViewById(R.id.chart1)
+
+        button.setOnClickListener {
+            progressViewModel.save(
+                weightText.text.toString().toDouble(),
+                Date().formatToServerDateDefaults()
+            )
+        }
 
         progressViewModel.source.observe(viewLifecycleOwner, Observer {
             when (it.status) {
@@ -70,6 +82,21 @@ class ProgressFragment : Fragment(){
                         drawChart(data)
                     }
 
+                }
+            }
+        })
+
+        progressViewModel.saveSource.observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.LOADING -> {
+                    loading.isVisible = true
+                }
+                Status.ERROR -> {
+                    loading.isVisible = false
+                }
+                Status.SUCCESS -> {
+                    loading.isVisible = false
+                    progressViewModel.load()
                 }
             }
         })

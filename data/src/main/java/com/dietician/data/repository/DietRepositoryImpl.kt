@@ -97,6 +97,11 @@ class DietRepositoryImpl @Inject constructor(
             }
     }
 
+    override fun saveProgress(progressEntity: ProgressEntity): Observable<Long> {
+        val progressData = progressMapper.to(progressEntity)
+        return remoteDataSource.saveProgress(progressData)
+    }
+
     private fun savePlanInRemote(plan: PlanEntity, userData: UserTokenData): Observable<Long> {
         val t = planDomainDataMapper.to(plan, userData.id)
         return remoteDataSource.savePlan(t).map {
