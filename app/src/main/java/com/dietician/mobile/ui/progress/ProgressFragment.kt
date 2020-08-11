@@ -96,6 +96,7 @@ class ProgressFragment : Fragment(){
                 }
                 Status.SUCCESS -> {
                     loading.isVisible = false
+                    progressViewModel.load()
                 }
             }
         })
