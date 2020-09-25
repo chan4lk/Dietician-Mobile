@@ -6,6 +6,9 @@ import androidx.databinding.BindingAdapter
 import com.dietician.mobile.R
 import com.dietician.presentation.model.Food
 import com.dietician.presentation.model.Header
+import java.math.BigDecimal
+import java.math.RoundingMode
+import kotlin.math.round
 
 @BindingAdapter("foodNameString")
 fun TextView.setFoodNameString(item: Food?) {
@@ -14,24 +17,33 @@ fun TextView.setFoodNameString(item: Food?) {
     }
 }
 
+@BindingAdapter("foodCalorieString")
+fun TextView.setFoodCalorieString(item: Food?) {
+    item?.let {
+        text = BigDecimal((item.fat*9 + item.protine*4 + item.carbohydrate*4)).setScale(2,RoundingMode.HALF_EVEN).toPlainString() +"kcal"
+
+//        BigDecimal(3.14159265359).setScale(2, RoundingMode.HALF_EVEN)
+    }
+}
+
 @BindingAdapter("foodProteinString")
 fun TextView.setFoodProteinString(item: Food?) {
     item?.let {
-        text = item.protine.toBigDecimal().toPlainString()
+        text = item.protine.toBigDecimal().toPlainString()+"g"
     }
 }
 
 @BindingAdapter("foodCarbString")
 fun TextView.setFoodCarbString(item: Food?) {
     item?.let {
-        text = item.carbohydrate.toBigDecimal().toPlainString()
+        text = item.carbohydrate.toBigDecimal().toPlainString()+"g"
     }
 }
 
 @BindingAdapter("foodFatString")
 fun TextView.setFoodFatString(item: Food?) {
     item?.let {
-        text = item.fat.toBigDecimal().toPlainString()
+        text = item.fat.toBigDecimal().toPlainString()+"g"
     }
 }
 

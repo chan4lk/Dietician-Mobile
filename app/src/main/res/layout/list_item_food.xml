@@ -62,8 +62,9 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="180dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        app:foodCalorieString="@{food}"
                         tools:text="250 kcal" />
 
 
@@ -78,14 +79,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="start"
-                        android:textColor="@color/colorPrimaryDark"
+                        android:textColor="#3954FA"
                         android:text="Protein"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="16dp"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="#24C52B"
                         android:text="Carb" />
 
                     <TextView
@@ -107,7 +108,7 @@
                         android:layout_width="8dp"
                         android:layout_height="8dp"
                         android:layout_marginTop="3dp"
-                        android:background="@drawable/round_textview"
+                        android:background="@drawable/round_textview_blue"
                         android:text="."
                         android:textSize="12sp" />
 
@@ -125,7 +126,7 @@
                         android:layout_height="8dp"
                         android:layout_marginLeft="13dp"
                         android:layout_marginTop="3dp"
-                        android:background="@drawable/round_textview"
+                        android:background="@drawable/round_textview_green"
                         android:text="."
                         android:textSize="12sp" />
 
@@ -142,7 +143,7 @@
                         android:layout_height="8dp"
                         android:layout_marginLeft="8dp"
                         android:layout_marginTop="3dp"
-                        android:background="@drawable/round_textview"
+                        android:background="@drawable/round_textview_orange"
                         android:text="."
                         android:textSize="12sp" />
 
