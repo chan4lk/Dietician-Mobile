@@ -60,7 +60,7 @@ class FoodFragment : Fragment() {
 
             override fun getSpanSize(position: Int) = when (adapter.getItemViewType(position)) {
                 ITEM_VIEW_TYPE_HEADER -> 3
-                else -> 1
+                else -> 3
             }
         }
         binding.foodListRecyclerView.layoutManager = manager

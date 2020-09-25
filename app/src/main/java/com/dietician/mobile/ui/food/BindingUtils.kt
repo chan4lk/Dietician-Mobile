@@ -14,9 +14,37 @@ fun TextView.setFoodNameString(item: Food?) {
     }
 }
 
+@BindingAdapter("foodProteinString")
+fun TextView.setFoodProteinString(item: Food?) {
+    item?.let {
+        text = item.protine.toBigDecimal().toPlainString()
+    }
+}
+
+@BindingAdapter("foodCarbString")
+fun TextView.setFoodCarbString(item: Food?) {
+    item?.let {
+        text = item.carbohydrate.toBigDecimal().toPlainString()
+    }
+}
+
+@BindingAdapter("foodFatString")
+fun TextView.setFoodFatString(item: Food?) {
+    item?.let {
+        text = item.fat.toBigDecimal().toPlainString()
+    }
+}
+
 @BindingAdapter("foodImage")
 fun ImageView.setSleepImage(item: Food?) {
     item?.let {
+//        when (item.name) {
+//            "Brown Rice (cooked)" -> print("x == 1")
+//            "Egg Noodles" -> print("x == 2")
+//            else -> { // Note the block
+//                print("x is neither 1 nor 2")
+//            }
+//        }
         setImageResource(R.drawable.food2)
     }
 }

@@ -12,39 +12,157 @@
 
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:onClick="@{() -> clickListener.onClick(food)}">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:onClick="@{() -> clickListener.onClick(food)}"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true">
 
-    <ImageView
-        android:id="@+id/food_image"
-        android:layout_width="@dimen/icon_size"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@drawable/food2"
-        app:foodImage="@{food}"
-        android:layout_marginLeft="16dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/name_string"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:gravity="start"
-        app:foodNameString="@{food}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/food_image"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/food_image"
-        app:layout_constraintTop_toBottomOf="@+id/food_image"
-        tools:text="Cofee" />
+            <ImageView
+                android:id="@+id/food_image"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:foodImage="@{food}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/food2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/name_string"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        app:foodNameString="@{food}"
+                        android:gravity="start"
+                        tools:text="Cofee" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="180dp"
+                        tools:text="250 kcal" />
 
 
+                </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="start"
+                        android:textColor="@color/colorPrimaryDark"
+                        tools:text="Protein" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="16dp"
+                        android:textColor="@color/colorAccent"
+                        tools:text="Carb" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="30dp"
+                        android:textColor="@android:color/holo_orange_dark"
+                        tools:text="Fat" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/round_textview"
+                        android:text="."
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/protein"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        app:foodProteinString="@{food}"
+                        android:gravity="start"
+                        tools:text="2.69g" />
+
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="13dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/round_textview"
+                        android:text="."
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/carb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        app:foodCarbString="@{food}"
+                        tools:text="28.17g" />
+
+                    <TextView
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="3dp"
+                        android:background="@drawable/round_textview"
+                        android:text="."
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/fat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        app:foodFatString="@{food}"
+                        tools:text="0.28g" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 </layout>
