@@ -59,6 +59,13 @@ class ProfileFragment : Fragment() {
         val saveButton: MaterialButton = root.findViewById(R.id.save_profile_btn)
         val loading: ProgressBar = root.findViewById(R.id.loading)
 
+        maleGender.setOnClickListener{
+            isPregnant.isEnabled = false
+        }
+
+        femaleGender.setOnClickListener{
+            isPregnant.isEnabled = true
+        }
         saveButton.setOnClickListener {
             val isMale = when (maleGender.isChecked) {
                 true -> MALE.ordinal
