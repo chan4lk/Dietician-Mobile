@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -21,6 +22,7 @@ import com.dietician.presentation.model.Status
 import com.dietician.presentation.viewmodels.LoginViewModel
 import com.google.android.material.button.MaterialButton
 import javax.inject.Inject
+
 
 class LoginFragment : Fragment() {
     @Inject
@@ -81,5 +83,15 @@ class LoginFragment : Fragment() {
         })
 
         return root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 }
